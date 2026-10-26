@@ -25,39 +25,49 @@
   .glyph{width:46px;height:46px;border:1px solid rgba(28,26,22,.4);display:flex;align-items:center;justify-content:center}
   .useBtn{align-self:flex-start;background:none;border:none;padding:0;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#1C1A16;display:flex;align-items:center;gap:6px}
   .useBtn:hover{color:#D9622E}
+  @media (max-width:760px){
+    .appShell{flex-direction:column!important}
+    .sidebar{width:100%!important;flex:0 0 auto!important;flex-direction:row!important;align-items:center!important;overflow-x:auto!important;border-right:none!important;border-bottom:1px solid rgba(28,26,22,.3)!important;padding:14px 16px!important;gap:14px!important}
+    .sidebarDivider,.sidebarSpacer,.sidebarFoot{display:none!important}
+    .sidebarBrand{white-space:nowrap}
+    .sidebarNav{flex-direction:row!important;gap:6px!important;flex-wrap:nowrap!important}
+    .navitem{white-space:nowrap;padding:8px 10px!important;font-size:11px!important}
+    .pageHead{padding:24px 16px 20px!important}
+    .pageBody{padding:16px!important;grid-template-columns:1fr!important}
+  }
 </style>
 </helmet>
 
-<div style="width:100%;min-height:900px;background:#EFE9DB;display:flex;font-family:'JetBrains Mono',monospace;color:#1C1A16">
+<div class="appShell" style="width:100%;min-height:900px;background:#EFE9DB;display:flex;font-family:'JetBrains Mono',monospace;color:#1C1A16">
 
-  <div style="width:236px;flex:0 0 236px;border-right:1px solid rgba(28,26,22,.3);display:flex;flex-direction:column;padding:28px 18px;box-sizing:border-box;gap:28px">
-    <div>
+  <div class="sidebar" style="width:236px;flex:0 0 236px;border-right:1px solid rgba(28,26,22,.3);display:flex;flex-direction:column;padding:28px 18px;box-sizing:border-box;gap:28px">
+    <div class="sidebarBrand">
       <div style="font-family:'Fraunces',serif;font-size:26px;font-weight:600;letter-spacing:-.01em">TRACE</div>
       <div style="font-size:10px;letter-spacing:.14em;color:#8A8372;margin-top:4px">SURVEY · DRAFT · EXPORT</div>
     </div>
-    <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
-    <div style="display:flex;flex-direction:column;gap:4px">
+    <div class="sidebarDivider" style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
+    <div class="sidebarNav" style="display:flex;flex-direction:column;gap:4px">
       <a class="navitem" href="Main.dc.html">◇ Home</a>
-      <a class="navitem" href="Main.dc.html">◇ Projects</a>
+      <a class="navitem" href="Main.dc.html?view=list">◇ Projects</a>
       <a class="navitem active" href="Templates.dc.html">◆ Templates</a>
       <a class="navitem" href="Spreadsheet.dc.html">◇ Spreadsheet</a>
       <a class="navitem" href="Drawings.dc.html">◇ Drawings</a>
       <a class="navitem" href="Settings.dc.html">◇ Settings</a>
     </div>
-    <div style="flex:1"></div>
-    <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
-    <div style="font-size:10px;letter-spacing:.1em;color:#8A8372;display:flex;justify-content:space-between">
+    <div class="sidebarSpacer" style="flex:1"></div>
+    <div class="sidebarDivider" style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
+    <div class="sidebarFoot" style="font-size:10px;letter-spacing:.1em;color:#8A8372;display:flex;justify-content:space-between">
       <span>v0.1.0</span><span>LOCAL</span>
     </div>
   </div>
 
   <div style="flex:1;min-width:0;display:flex;flex-direction:column">
-    <div style="padding:40px 48px 30px;border-bottom:1px solid rgba(28,26,22,.3)">
+    <div class="pageHead" style="padding:40px 48px 30px;border-bottom:1px solid rgba(28,26,22,.3)">
       <div style="font-family:'Fraunces',serif;font-size:30px;font-weight:600">Templates</div>
       <div class="label" style="margin-top:6px;text-transform:none;letter-spacing:.02em;font-size:12px">Pre-built structures to start a new survey faster</div>
     </div>
 
-    <div style="padding:30px 48px 60px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px">
+    <div class="pageBody" style="padding:30px 48px 60px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px">
 
       <div class="tcard">
         <div class="crn tl"></div><div class="crn tr"></div><div class="crn bl"></div><div class="crn br"></div>

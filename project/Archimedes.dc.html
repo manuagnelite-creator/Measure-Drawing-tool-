@@ -31,21 +31,32 @@
   .bubble{padding:9px 13px;font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:13px;line-height:1.4;align-self:flex-start}
   .bubble.user{align-self:flex-end;background:#1C1A16;color:#F5F1E6}
   .bubble.sys{align-self:flex-start;background:#E3DCC9;color:#2B2A26;border:1px solid rgba(28,26,22,.25)}
+  @media (max-width:760px){
+    .screenHead{padding:20px 16px 0!important}
+    .screenTitle{font-size:24px!important}
+    .screenTabs{overflow-x:auto!important;flex-wrap:nowrap!important}
+    .splashWrap{padding:28px 16px!important}
+    .resultWrap{padding:16px!important}
+    .resultRow{flex-direction:column!important}
+    .exportBar{width:100%!important;flex:0 0 auto!important;flex-direction:row!important;overflow-x:auto!important;align-items:flex-start!important;gap:16px!important}
+    .exportBar>div{flex:0 0 auto}
+    .canvasWrap{min-height:320px!important}
+  }
 </style>
 </helmet>
 
 <div style="width:100%;min-height:900px;background:#EFE9DB;display:flex;flex-direction:column;font-family:'JetBrains Mono',monospace;color:#1C1A16">
 
-    <div style="padding:40px 48px 0">
+    <div class="screenHead" style="padding:40px 48px 0">
       <a class="backBtn" href="Main.dc.html?view=list">
         <svg width="12" height="9" viewBox="0 0 14 10" aria-hidden="true"><path d="M14 5H1M6 0 1 5l5 5" stroke="#5B6472" stroke-width="1.3" fill="none"></path></svg>
         Back to Projects
       </a>
-      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:18px">
-        <div style="font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:36px;font-weight:800;letter-spacing:-.005em">HOUSE OF SHARMA</div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:18px;flex-wrap:wrap;gap:8px">
+        <div class="screenTitle" style="font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:36px;font-weight:800;letter-spacing:-.005em">HOUSE OF SHARMA</div>
         <span class="label">◆ 001 · RESIDENTIAL</span>
       </div>
-      <div style="display:flex;gap:24px;margin-top:18px">
+      <div class="screenTabs" style="display:flex;gap:24px;margin-top:18px">
         <a class="tab" href="Main.dc.html">Info</a>
         <a class="tab" href="Scans.dc.html">Scans</a>
         <span class="tab active">Archimedes</span>
@@ -56,7 +67,7 @@
 
     <!-- SPLASH -->
     <sc-if value="{{isSplash}}" hint-placeholder-val="{{true}}">
-    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 48px;text-align:center;gap:22px">
+    <div class="splashWrap" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 48px;text-align:center;gap:22px">
 
       <div>
         <div class="label" style="margin-bottom:10px">◆ ARCHIMEDES · AI DRAFTING</div>
@@ -64,19 +75,19 @@
         <div class="val" style="color:#8A8372;margin-top:10px;max-width:480px;margin-left:auto;margin-right:auto">Upload a hand sketch, scanned drawing, or dimensioned plan — Archimedes traces the walls, marks doors and windows, and dimensions everything in ft-in and mm.</div>
       </div>
 
-      <label class="dropzone" style="width:560px;padding:30px" onDragOver="{{onDragOver}}" onDrop="{{onDrop}}">
+      <label class="dropzone" style="width:100%;max-width:560px;box-sizing:border-box;padding:30px" onDragOver="{{onDragOver}}" onDrop="{{onDrop}}">
         <svg width="24" height="24" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v11M4 8l6-6 6 6M3 17h14" stroke="#5B6472" stroke-width="1.3" fill="none"></path></svg>
         <span class="val" style="font-size:13px;color:#5B6472">Drop a sketch, scan, or PDF here, or click to browse</span>
         <input type="file" accept="image/*,.pdf" onChange="{{onFilePick}}" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer">
       </label>
 
-      <div style="display:flex;align-items:center;gap:12px;width:560px">
+      <div style="display:flex;align-items:center;gap:12px;width:100%;max-width:560px">
         <div style="flex:1;height:1px;background:rgba(28,26,22,.25)"></div>
         <span class="label">OR DESCRIBE IT</span>
         <div style="flex:1;height:1px;background:rgba(28,26,22,.25)"></div>
       </div>
 
-      <div style="display:flex;align-items:center;gap:10px;width:560px;background:#F5F1E6;border:1px solid rgba(28,26,22,.35);padding:13px 16px;box-sizing:border-box">
+      <div style="display:flex;align-items:center;gap:10px;width:100%;max-width:560px;background:#F5F1E6;border:1px solid rgba(28,26,22,.35);padding:13px 16px;box-sizing:border-box">
         <input type="text" placeholder="e.g. 2BHK, 1050 sq ft, living room facing north…" value="{{promptText}}" onChange="{{setPromptText}}" onKeyDown="{{onPromptKeyDown}}" style="flex:1;border:none;background:none;outline:none;font-family:'JetBrains Mono',monospace;font-size:13px;color:#1C1A16">
         <button type="button" onClick="{{generateFromText}}" style="background:#1C1A16;color:#F5F1E6;border:none;padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer">Generate →</button>
       </div>
@@ -95,14 +106,14 @@
 
     <!-- RESULT -->
     <sc-if value="{{isResult}}" hint-placeholder-val="{{false}}">
-    <div style="flex:1;display:flex;flex-direction:column;min-height:0;padding:26px 48px 36px;box-sizing:border-box;gap:18px">
+    <div class="resultWrap" style="flex:1;display:flex;flex-direction:column;min-height:0;padding:26px 48px 36px;box-sizing:border-box;gap:18px">
 
-      <div style="flex:1;display:flex;gap:26px;min-height:0">
+      <div class="resultRow" style="flex:1;display:flex;gap:26px;min-height:0">
 
         <!-- CANVAS -->
         <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px">
           <div class="label">◆ Generated from: {{sourceLabel}}</div>
-          <div style="background:#fff;border:1px solid rgba(28,26,22,.3);flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden">
+          <div class="canvasWrap" style="background:#fff;border:1px solid rgba(28,26,22,.3);flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden">
             <svg id="planSvg" viewBox="0 0 900 640" width="100%" height="100%" style="max-width:820px" preserveAspectRatio="xMidYMid meet">
               <rect x="0" y="0" width="900" height="640" fill="#ffffff"></rect>
 
@@ -160,7 +171,7 @@
         </div>
 
         <!-- RIGHT EXPORT BAR -->
-        <div style="width:230px;flex:0 0 230px;display:flex;flex-direction:column;gap:22px">
+        <div class="exportBar" style="width:230px;flex:0 0 230px;display:flex;flex-direction:column;gap:22px">
           <div>
             <div class="label" style="margin-bottom:10px">Export</div>
             <button type="button" class="expBtn" onClick="{{exportDwg}}">⬓ Export DWG</button>

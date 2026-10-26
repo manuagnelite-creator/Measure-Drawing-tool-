@@ -26,21 +26,32 @@
   .dval{font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:14px;color:#2B2A26}
   .dtotal{background:#F5F1E6;font-weight:700;border-top:1.5px solid #1C1A16;border-bottom:none}
   .stat{background:#F5F1E6;border:1px solid rgba(28,26,22,.3);padding:20px}
+  @media (max-width:760px){
+    .screenHead{padding:20px 16px 0!important}
+    .screenTitle{font-size:24px!important}
+    .screenTabs{overflow-x:auto!important;flex-wrap:nowrap!important}
+    .dataBody{padding:16px!important}
+    .dashHead{flex-wrap:wrap!important;gap:12px!important}
+    .dataTabs{overflow-x:auto!important;flex-wrap:nowrap!important}
+    .tableScroll{overflow-x:auto!important}
+    .tableInner{min-width:560px!important}
+    .climateGrid{grid-template-columns:1fr 1fr!important}
+  }
 </style>
 </helmet>
 
 <div style="width:100%;min-height:900px;background:#EFE9DB;display:flex;flex-direction:column;font-family:'JetBrains Mono',monospace;color:#1C1A16">
 
-    <div style="padding:40px 48px 0">
+    <div class="screenHead" style="padding:40px 48px 0">
       <a class="backBtn" href="Main.dc.html?view=list">
         <svg width="12" height="9" viewBox="0 0 14 10" aria-hidden="true"><path d="M14 5H1M6 0 1 5l5 5" stroke="#5B6472" stroke-width="1.3" fill="none"></path></svg>
         Back to Projects
       </a>
-      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:18px">
-        <div style="font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:36px;font-weight:800;letter-spacing:-.005em">HOUSE OF SHARMA</div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:18px;flex-wrap:wrap;gap:8px">
+        <div class="screenTitle" style="font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:36px;font-weight:800;letter-spacing:-.005em">HOUSE OF SHARMA</div>
         <span class="label">◆ 001 · RESIDENTIAL</span>
       </div>
-      <div style="display:flex;gap:24px;margin-top:18px">
+      <div class="screenTabs" style="display:flex;gap:24px;margin-top:18px">
         <a class="tab" href="Main.dc.html">Info</a>
         <a class="tab" href="Scans.dc.html">Scans</a>
         <a class="tab" href="Archimedes.dc.html">Archimedes</a>
@@ -49,14 +60,14 @@
       <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px);margin-top:18px"></div>
     </div>
 
-    <div style="padding:30px 48px 60px;max-width:1280px">
+    <div class="dataBody" style="padding:30px 48px 60px;max-width:1280px">
 
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px">
+      <div class="dashHead" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px">
         <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600">Project Data Dashboard</div>
         <button class="btnOutline" type="button" onClick="{{exportAll}}">Export All Data</button>
       </div>
 
-      <div style="display:flex;gap:24px;margin-bottom:18px">
+      <div class="dataTabs" style="display:flex;gap:24px;margin-bottom:18px">
         <button type="button" class="tab {{tabAreasActive}}" onClick="{{setTabAreas}}">Areas List</button>
         <button type="button" class="tab {{tabDoorsActive}}" onClick="{{setTabDoors}}">Door &amp; Window Schedule</button>
         <button type="button" class="tab {{tabSoilActive}}" onClick="{{setTabSoil}}">Soil Analysis</button>
@@ -69,6 +80,7 @@
             <div class="dval" style="font-weight:700">Room Areas &amp; Volumes</div>
             <button class="btnOutline" type="button" style="padding:6px 12px" onClick="{{exportAreas}}">Export CSV</button>
           </div>
+          <div class="tableScroll"><div class="tableInner">
           <div class="drow" style="border-bottom:1.5px solid #1C1A16;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr">
             <span class="dhd">Room Name</span><span class="dhd">Area (ft²)</span><span class="dhd">Perimeter (ft)</span><span class="dhd">Height (ft)</span><span class="dhd">Volume (ft³)</span>
           </div>
@@ -79,6 +91,7 @@
           <div class="drow" style="grid-template-columns:1.4fr 1fr 1fr 1fr 1fr"><span class="dval">Bathroom</span><span class="dval">84</span><span class="dval">38</span><span class="dval">9</span><span class="dval">756</span></div>
           <div class="drow" style="grid-template-columns:1.4fr 1fr 1fr 1fr 1fr"><span class="dval">Hallway</span><span class="dval">52</span><span class="dval">42</span><span class="dval">9</span><span class="dval">468</span></div>
           <div class="drow dtotal" style="grid-template-columns:1.4fr 1fr 1fr 1fr 1fr"><span class="dval">Total</span><span class="dval">1059</span><span class="dval">—</span><span class="dval">—</span><span class="dval">9531</span></div>
+          </div></div>
         </div>
       </sc-if>
 
@@ -88,6 +101,7 @@
             <div class="dval" style="font-weight:700">Door &amp; Window Schedule</div>
             <button class="btnOutline" type="button" style="padding:6px 12px" onClick="{{exportDoors}}">Export CSV</button>
           </div>
+          <div class="tableScroll"><div class="tableInner">
           <div class="drow" style="border-bottom:1.5px solid #1C1A16;grid-template-columns:.7fr 1fr 1.4fr 1fr 1fr 1fr">
             <span class="dhd">ID</span><span class="dhd">Type</span><span class="dhd">Location</span><span class="dhd">Width</span><span class="dhd">Height</span><span class="dhd">Material</span>
           </div>
@@ -95,6 +109,7 @@
           <div class="drow" style="grid-template-columns:.7fr 1fr 1.4fr 1fr 1fr 1fr"><span class="dval">D-02</span><span class="dval">Door</span><span class="dval">Bedroom 1 Entry</span><span class="dval">810mm</span><span class="dval">2050mm</span><span class="dval">Timber</span></div>
           <div class="drow" style="grid-template-columns:.7fr 1fr 1.4fr 1fr 1fr 1fr"><span class="dval">W-01</span><span class="dval">Window</span><span class="dval">Living Room · East</span><span class="dval">1500mm</span><span class="dval">1200mm</span><span class="dval">Aluminium</span></div>
           <div class="drow" style="grid-template-columns:.7fr 1fr 1.4fr 1fr 1fr 1fr"><span class="dval">W-02</span><span class="dval">Window</span><span class="dval">Bedroom 1 · South</span><span class="dval">1100mm</span><span class="dval">1200mm</span><span class="dval">Aluminium</span></div>
+          </div></div>
         </div>
       </sc-if>
 
@@ -104,17 +119,19 @@
             <div class="dval" style="font-weight:700">Soil Analysis</div>
             <button class="btnOutline" type="button" style="padding:6px 12px" onClick="{{exportSoil}}">Export CSV</button>
           </div>
+          <div class="tableScroll"><div class="tableInner">
           <div class="drow" style="border-bottom:1.5px solid #1C1A16;grid-template-columns:1fr 1fr 1.3fr 1fr">
             <span class="dhd">Test Point</span><span class="dhd">Depth (m)</span><span class="dhd">Bearing Capacity</span><span class="dhd">Soil Type</span>
           </div>
           <div class="drow" style="grid-template-columns:1fr 1fr 1.3fr 1fr"><span class="dval">TP-01</span><span class="dval">1.5</span><span class="dval">150 kN/m²</span><span class="dval">Clayey Sand</span></div>
           <div class="drow" style="grid-template-columns:1fr 1fr 1.3fr 1fr"><span class="dval">TP-02</span><span class="dval">1.8</span><span class="dval">180 kN/m²</span><span class="dval">Sandy Loam</span></div>
           <div class="drow" style="grid-template-columns:1fr 1fr 1.3fr 1fr"><span class="dval">TP-03</span><span class="dval">1.6</span><span class="dval">165 kN/m²</span><span class="dval">Clayey Sand</span></div>
+          </div></div>
         </div>
       </sc-if>
 
       <sc-if value="{{isClimate}}" hint-placeholder-val="{{false}}">
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+        <div class="climateGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
           <div class="stat"><div class="dhd">Avg. Temperature</div><div class="dval" style="font-size:24px;margin-top:6px">27°C</div></div>
           <div class="stat"><div class="dhd">Annual Rainfall</div><div class="dval" style="font-size:24px;margin-top:6px">890 mm</div></div>
           <div class="stat"><div class="dhd">Peak Sun Hours</div><div class="dval" style="font-size:24px;margin-top:6px">6.2 h</div></div>

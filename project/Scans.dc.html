@@ -40,21 +40,30 @@
   .input:focus{border-color:#D9622E}
   .zbtn{width:26px;height:26px;border:1px solid rgba(28,26,22,.4);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;background:#F5F1E6}
   .zbtn:hover{border-color:#1C1A16}
+  @media (max-width:760px){
+    .screenHead{padding:20px 16px 0!important}
+    .screenTitle{font-size:24px!important}
+    .screenTabs{overflow-x:auto!important;flex-wrap:nowrap!important}
+    .scansBody{padding:16px!important;grid-template-columns:1fr!important}
+    .viewTabs{overflow-x:auto!important;flex-wrap:nowrap!important}
+    .tableScroll{overflow-x:auto!important}
+    .tableInner{min-width:560px!important}
+  }
 </style>
 </helmet>
 
 <div style="width:100%;min-height:900px;background:#EFE9DB;display:flex;flex-direction:column;font-family:'JetBrains Mono',monospace;color:#1C1A16">
 
-    <div style="padding:40px 48px 0">
+    <div class="screenHead" style="padding:40px 48px 0">
       <a class="backBtn" href="Main.dc.html?view=list">
         <svg width="12" height="9" viewBox="0 0 14 10" aria-hidden="true"><path d="M14 5H1M6 0 1 5l5 5" stroke="#5B6472" stroke-width="1.3" fill="none"></path></svg>
         Back to Projects
       </a>
-      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:18px">
-        <div style="font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:36px;font-weight:800;letter-spacing:-.005em">HOUSE OF SHARMA</div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:18px;flex-wrap:wrap;gap:8px">
+        <div class="screenTitle" style="font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:36px;font-weight:800;letter-spacing:-.005em">HOUSE OF SHARMA</div>
         <span class="label">◆ 001 · RESIDENTIAL</span>
       </div>
-      <div style="display:flex;gap:24px;margin-top:18px">
+      <div class="screenTabs" style="display:flex;gap:24px;margin-top:18px">
         <a class="tab" href="Main.dc.html">Info</a>
         <span class="tab active">Scans</span>
         <a class="tab" href="Archimedes.dc.html">Archimedes</a>
@@ -63,11 +72,11 @@
       <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px);margin-top:18px"></div>
     </div>
 
-    <div style="padding:30px 48px 60px;display:grid;grid-template-columns:1.6fr 1fr;gap:28px;align-items:start;max-width:1280px">
+    <div class="scansBody" style="padding:30px 48px 60px;display:grid;grid-template-columns:1.6fr 1fr;gap:28px;align-items:start;max-width:1280px">
 
       <div style="display:flex;flex-direction:column;gap:22px;min-width:0">
 
-        <div style="display:flex;gap:18px">
+        <div class="viewTabs" style="display:flex;gap:18px">
           <button type="button" class="tab {{viewPlanActive}}" onClick="{{setViewPlan}}">Plan</button>
           <button type="button" class="tab {{view3dActive}}" onClick="{{setView3d}}">3D Point Cloud</button>
           <button type="button" class="tab {{viewRcpActive}}" onClick="{{setViewRcp}}">Reflected Ceiling Plan</button>
@@ -99,7 +108,8 @@
           <div class="label" style="position:absolute;bottom:18px;right:16px">{{zoomPct}}%</div>
         </div>
 
-        <div>
+        <div class="tableScroll">
+          <div class="tableInner">
           <div class="row" style="border-bottom:1px solid rgba(28,26,22,.4);cursor:default">
             <span class="hd">Element</span><span class="hd">Location</span><span class="hd">Dimension</span><span class="hd">Confidence</span><span class="hd">Status</span>
           </div>
@@ -110,6 +120,7 @@
               <span class="pill" style="color:{{el.confColor}}">{{el.status}}</span>
             </button>
           </sc-for>
+          </div>
         </div>
       </div>
 

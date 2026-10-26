@@ -61,19 +61,38 @@
   .btnGhost:hover{border-color:#1C1A16}
   .closeX{background:none;border:none;cursor:pointer;color:#5B6472;padding:6px;margin:-6px}
   .closeX:hover{color:#1C1A16}
+  @media (max-width:760px){
+    .appShell{flex-direction:column!important}
+    .sidebar{width:100%!important;flex:0 0 auto!important;flex-direction:row!important;align-items:center!important;overflow-x:auto!important;border-right:none!important;border-bottom:1px solid rgba(28,26,22,.3)!important;padding:14px 16px!important;gap:14px!important}
+    .sidebarDivider,.sidebarSpacer,.sidebarFoot{display:none!important}
+    .sidebarBrand{white-space:nowrap}
+    .sidebarNav{flex-direction:row!important;gap:6px!important;flex-wrap:nowrap!important}
+    .navitem{white-space:nowrap;padding:8px 10px!important;font-size:11px!important}
+    .topbar{flex-wrap:wrap!important;padding:18px 16px!important}
+    .topbar .searchWrap{max-width:none!important;flex:1 1 100%!important;order:1}
+    .topbar .spacer{display:none!important}
+    .topbar .newBtn{order:2;flex:0 0 auto}
+    .pageBody{padding:20px 16px 48px!important}
+    .cardGrid{grid-template-columns:1fr!important}
+    .ovContent{padding:28px 20px!important}
+    .ovTitle{font-size:28px!important}
+    .ovGrid{grid-template-columns:1fr!important;gap:28px!important}
+    .ovTabs{overflow-x:auto!important;flex-wrap:nowrap!important}
+    .formGrid{grid-template-columns:1fr!important}
+  }
 </style>
 </helmet>
 
-<div style="width:100%;min-height:900px;background:#EFE9DB;display:flex;font-family:'JetBrains Mono',monospace;color:#1C1A16;opacity:{{gridOpacity}};pointer-events:{{gridPointerEvents}};transition:opacity .3s ease">
+<div class="appShell" style="width:100%;min-height:900px;background:#EFE9DB;display:flex;font-family:'JetBrains Mono',monospace;color:#1C1A16;opacity:{{gridOpacity}};pointer-events:{{gridPointerEvents}};transition:opacity .3s ease">
 
   <!-- SIDEBAR -->
-  <div style="width:236px;flex:0 0 236px;border-right:1px solid rgba(28,26,22,.3);display:flex;flex-direction:column;padding:28px 18px;box-sizing:border-box;gap:28px">
-    <div>
+  <div class="sidebar" style="width:236px;flex:0 0 236px;border-right:1px solid rgba(28,26,22,.3);display:flex;flex-direction:column;padding:28px 18px;box-sizing:border-box;gap:28px">
+    <div class="sidebarBrand">
       <div style="font-family:'Fraunces',serif;font-size:26px;font-weight:600;letter-spacing:-.01em">TRACE</div>
       <div style="font-size:10px;letter-spacing:.14em;color:#8A8372;margin-top:4px">SURVEY · DRAFT · EXPORT</div>
     </div>
-    <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
-    <div style="display:flex;flex-direction:column;gap:4px">
+    <div class="sidebarDivider" style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
+    <div class="sidebarNav" style="display:flex;flex-direction:column;gap:4px">
       <a class="navitem {{homeActiveCls}}" href="Main.dc.html">{{homeMark}} Home</a>
       <a class="navitem {{listActiveCls}}" href="Main.dc.html?view=list">{{listMark}} Projects</a>
       <a class="navitem" href="Templates.dc.html">◇ Templates</a>
@@ -81,9 +100,9 @@
       <a class="navitem" href="Drawings.dc.html">◇ Drawings</a>
       <a class="navitem" href="Settings.dc.html">◇ Settings</a>
     </div>
-    <div style="flex:1"></div>
-    <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
-    <div style="font-size:10px;letter-spacing:.1em;color:#8A8372;display:flex;justify-content:space-between">
+    <div class="sidebarSpacer" style="flex:1"></div>
+    <div class="sidebarDivider" style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
+    <div class="sidebarFoot" style="font-size:10px;letter-spacing:.1em;color:#8A8372;display:flex;justify-content:space-between">
       <span>v0.1.0</span><span>LOCAL</span>
     </div>
   </div>
@@ -92,12 +111,12 @@
   <div style="flex:1;min-width:0;display:flex;flex-direction:column">
 
     <!-- TOPBAR -->
-    <div style="display:flex;align-items:center;gap:16px;padding:26px 36px;border-bottom:1px solid rgba(28,26,22,.3)">
-      <div style="flex:1;position:relative;max-width:420px">
+    <div class="topbar" style="display:flex;align-items:center;gap:16px;padding:26px 36px;border-bottom:1px solid rgba(28,26,22,.3)">
+      <div class="searchWrap" style="flex:1;position:relative;max-width:420px">
         <input type="text" placeholder="SEARCH PROJECTS…" style="width:100%;box-sizing:border-box;background:#F5F1E6;border:1px solid rgba(28,26,22,.35);padding:11px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;color:#1C1A16;outline:none">
       </div>
-      <div style="flex:1"></div>
-      <button type="button" onClick="{{openAdd}}" style="display:flex;align-items:center;gap:8px;background:{{accent}};color:#F5F1E6;border:1px solid #1C1A16;padding:11px 18px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer">
+      <div class="spacer" style="flex:1"></div>
+      <button type="button" class="newBtn" onClick="{{openAdd}}" style="display:flex;align-items:center;gap:8px;background:{{accent}};color:#F5F1E6;border:1px solid #1C1A16;padding:11px 18px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer">
         <svg width="11" height="11" viewBox="0 0 11 11" aria-hidden="true"><path d="M5.5 0v11M0 5.5h11" stroke="#F5F1E6" stroke-width="1.4"></path></svg>
         New Project
       </button>
@@ -105,10 +124,10 @@
 
     <!-- BODY -->
     <sc-if value="{{isHome}}" hint-placeholder-val="{{true}}">
-    <div style="padding:30px 36px 60px;display:flex;flex-direction:column;gap:26px">
+    <div class="pageBody" style="padding:30px 36px 60px;display:flex;flex-direction:column;gap:26px">
 
-      <div style="display:flex;align-items:baseline;justify-content:space-between">
-        <div style="display:flex;gap:26px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:10px">
+        <div style="display:flex;gap:26px;overflow-x:auto">
           <div class="tab active">Recently Viewed</div>
           <div class="tab">Shared Models</div>
           <div class="tab">Shared Collaborations</div>
@@ -116,7 +135,7 @@
         <div class="label">{{projectCountLabel}}</div>
       </div>
 
-      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px">
+      <div class="cardGrid" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px">
 
         <button type="button" class="card" onClick="{{openProject1}}">
           <div class="crn tl"></div><div class="crn tr"></div><div class="crn bl"></div><div class="crn br"></div>
@@ -206,7 +225,7 @@
 
     <!-- SIMPLE PROJECT LIST -->
     <sc-if value="{{isList}}" hint-placeholder-val="{{false}}">
-    <div style="padding:30px 36px 60px;display:flex;flex-direction:column;gap:18px">
+    <div class="pageBody" style="padding:30px 36px 60px;display:flex;flex-direction:column;gap:18px">
 
       <div style="display:flex;align-items:baseline;justify-content:space-between">
         <div class="label">Projects</div>
@@ -231,9 +250,9 @@
   <button type="button" class="backdrop" aria-label="Close project detail" onClick="{{closeProject}}" style="opacity:{{ov.backdropOpacity}}"></button>
   <div class="ov" style="left:{{ov.left}}px;top:{{ov.top}}px;width:{{ov.width}}px;height:{{ov.height}}px">
     <div class="crnL tl"></div><div class="crnL tr"></div><div class="crnL bl"></div><div class="crnL br"></div>
-    <div style="opacity:{{ov.contentOpacity}};transition:opacity .34s ease .2s;height:100%;box-sizing:border-box;padding:56px 64px;display:flex;flex-direction:column;gap:30px;overflow:auto">
+    <div class="ovContent" style="opacity:{{ov.contentOpacity}};transition:opacity .34s ease .2s;height:100%;box-sizing:border-box;padding:56px 64px;display:flex;flex-direction:column;gap:30px;overflow:auto">
 
-      <div style="display:flex;justify-content:space-between;align-items:center">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
         <button type="button" class="backBtn" onClick="{{closeProject}}">
           <svg width="12" height="9" viewBox="0 0 14 10" aria-hidden="true"><path d="M14 5H1M6 0 1 5l5 5" stroke="#5B6472" stroke-width="1.3" fill="none"></path></svg>
           Back to Projects
@@ -242,11 +261,11 @@
       </div>
 
       <div>
-        <div style="font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:46px;font-weight:800;letter-spacing:-.005em;color:#1C1A16">{{active.title}}</div>
+        <div class="ovTitle" style="font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:46px;font-weight:800;letter-spacing:-.005em;color:#1C1A16">{{active.title}}</div>
         <div style="font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:16px;color:#5B6472;margin-top:8px">{{active.location}} &nbsp;·&nbsp; {{active.size}}</div>
       </div>
 
-      <div style="display:flex;gap:24px">
+      <div class="ovTabs" style="display:flex;gap:24px">
         <span class="tab active">Info</span>
         <a class="tab" href="Scans.dc.html">Scans</a>
         <a class="tab" href="Archimedes.dc.html">Archimedes</a>
@@ -255,7 +274,7 @@
 
       <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
 
-      <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:56px;flex:1;min-height:0">
+      <div class="ovGrid" style="display:grid;grid-template-columns:1.1fr 1fr;gap:56px;flex:1;min-height:0">
 
         <div style="display:flex;flex-direction:column;gap:22px;min-width:0">
           <div>
@@ -336,7 +355,7 @@
 
       <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="formGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
         <div class="field" style="grid-column:1 / -1">
           <label class="metaLabel" for="pname">Project Name</label>
           <input id="pname" class="input" type="text" placeholder="e.g. Whitefield Residence" value="{{formName}}" onChange="{{setName}}">

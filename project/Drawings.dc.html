@@ -21,39 +21,51 @@
   .fileIcon{width:36px;height:36px;border:1px solid rgba(28,26,22,.4);display:flex;align-items:center;justify-content:center;background:#F5F1E6}
   .dlBtn{background:none;border:1px solid #1C1A16;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;color:#1C1A16}
   .dlBtn:hover{background:#1C1A16;color:#F5F1E6}
+  @media (max-width:760px){
+    .appShell{flex-direction:column!important}
+    .sidebar{width:100%!important;flex:0 0 auto!important;flex-direction:row!important;align-items:center!important;overflow-x:auto!important;border-right:none!important;border-bottom:1px solid rgba(28,26,22,.3)!important;padding:14px 16px!important;gap:14px!important}
+    .sidebarDivider,.sidebarSpacer,.sidebarFoot{display:none!important}
+    .sidebarBrand{white-space:nowrap}
+    .sidebarNav{flex-direction:row!important;gap:6px!important;flex-wrap:nowrap!important}
+    .navitem{white-space:nowrap;padding:8px 10px!important;font-size:11px!important}
+    .pageHead{padding:24px 16px 20px!important}
+    .pageBody{padding:16px!important}
+    .tableInner{min-width:640px!important}
+  }
 </style>
 </helmet>
 
-<div style="width:100%;min-height:900px;background:#EFE9DB;display:flex;font-family:'JetBrains Mono',monospace;color:#1C1A16">
+<div class="appShell" style="width:100%;min-height:900px;background:#EFE9DB;display:flex;font-family:'JetBrains Mono',monospace;color:#1C1A16">
 
-  <div style="width:236px;flex:0 0 236px;border-right:1px solid rgba(28,26,22,.3);display:flex;flex-direction:column;padding:28px 18px;box-sizing:border-box;gap:28px">
-    <div>
+  <div class="sidebar" style="width:236px;flex:0 0 236px;border-right:1px solid rgba(28,26,22,.3);display:flex;flex-direction:column;padding:28px 18px;box-sizing:border-box;gap:28px">
+    <div class="sidebarBrand">
       <div style="font-family:'Fraunces',serif;font-size:26px;font-weight:600;letter-spacing:-.01em">TRACE</div>
       <div style="font-size:10px;letter-spacing:.14em;color:#8A8372;margin-top:4px">SURVEY · DRAFT · EXPORT</div>
     </div>
-    <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
-    <div style="display:flex;flex-direction:column;gap:4px">
+    <div class="sidebarDivider" style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
+    <div class="sidebarNav" style="display:flex;flex-direction:column;gap:4px">
       <a class="navitem" href="Main.dc.html">◇ Home</a>
-      <a class="navitem" href="Main.dc.html">◇ Projects</a>
+      <a class="navitem" href="Main.dc.html?view=list">◇ Projects</a>
       <a class="navitem" href="Templates.dc.html">◇ Templates</a>
       <a class="navitem" href="Spreadsheet.dc.html">◇ Spreadsheet</a>
       <a class="navitem active" href="Drawings.dc.html">◆ Drawings</a>
       <a class="navitem" href="Settings.dc.html">◇ Settings</a>
     </div>
-    <div style="flex:1"></div>
-    <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
-    <div style="font-size:10px;letter-spacing:.1em;color:#8A8372;display:flex;justify-content:space-between">
+    <div class="sidebarSpacer" style="flex:1"></div>
+    <div class="sidebarDivider" style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
+    <div class="sidebarFoot" style="font-size:10px;letter-spacing:.1em;color:#8A8372;display:flex;justify-content:space-between">
       <span>v0.1.0</span><span>LOCAL</span>
     </div>
   </div>
 
   <div style="flex:1;min-width:0;display:flex;flex-direction:column">
-    <div style="padding:40px 48px 30px;border-bottom:1px solid rgba(28,26,22,.3)">
+    <div class="pageHead" style="padding:40px 48px 30px;border-bottom:1px solid rgba(28,26,22,.3)">
       <div style="font-family:'Fraunces',serif;font-size:30px;font-weight:600">Drawings</div>
       <div class="label" style="margin-top:6px;text-transform:none;letter-spacing:.02em;font-size:12px">Exported drawing files across your projects</div>
     </div>
 
-    <div style="padding:20px 48px 60px">
+    <div class="pageBody" style="padding:20px 48px 60px;overflow-x:auto">
+      <div class="tableInner">
       <div class="drow" style="border-bottom:1.5px solid #1C1A16">
         <span></span><span class="label">File</span><span class="label">Project</span><span class="label">Format</span><span class="label">Exported</span><span></span>
       </div>
@@ -70,6 +82,7 @@
           <button type="button" class="dlBtn" onClick="{{f.onDownload}}">Download</button>
         </div>
       </sc-for>
+      </div>
     </div>
   </div>
 </div>
