@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Datum — Scans</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,380;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  body{margin:0;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  input::placeholder{color:#9A9282}
+  .navitem{display:flex;align-items:center;gap:10px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#4A4536;border:1px solid transparent;cursor:pointer}
+  .navitem.active{color:#1C1A16;background:#F5F1E6;border:1px solid rgba(28,26,22,.35);font-weight:600}
+  .tab{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:10px 2px;border-bottom:2px solid transparent;color:#8A8372;cursor:pointer;background:none;border-left:none;border-right:none;border-top:none}
+  .tab.active{color:#1C1A16;border-bottom-color:#D9622E}
+  .label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8A8372}
+  .backBtn{display:flex;align-items:center;gap:8px;background:none;border:none;padding:6px 10px;margin:-6px -10px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#5B6472;transition:background .15s ease,color .15s ease}
+  .backBtn:hover{color:#1C1A16;background:rgba(28,26,22,.07)}
+  .crn{position:absolute;width:12px;height:12px;pointer-events:none}
+  .crn.tl{top:-1px;left:-1px;border-top:2px solid #1C1A16;border-left:2px solid #1C1A16}
+  .crn.tr{top:-1px;right:-1px;border-top:2px solid #1C1A16;border-right:2px solid #1C1A16}
+  .crn.bl{bottom:-1px;left:-1px;border-bottom:2px solid #1C1A16;border-left:2px solid #1C1A16}
+  .crn.br{bottom:-1px;right:-1px;border-bottom:2px solid #1C1A16;border-right:2px solid #1C1A16}
+  .row{display:grid;grid-template-columns:1fr 1.7fr 1fr 1.3fr .9fr;gap:12px;align-items:center;padding:13px 4px;border-bottom:1px solid rgba(28,26,22,.2);background:none;border-left:3px solid transparent;border-right:none;border-top:none;text-align:left;cursor:pointer;width:100%;font:inherit;color:inherit}
+  .row:hover{background:rgba(28,26,22,.04)}
+  .row.selected{border-left-color:#D9622E;background:rgba(217,98,46,.06)}
+  .hd{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8A8372}
+  .val{font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:14px;color:#2B2A26}
+  .cbar{display:flex;align-items:center;gap:8px}
+  .cbar .track{flex:1;height:4px;background:rgba(28,26,22,.15);position:relative}
+  .cbar .fill{position:absolute;left:0;top:0;height:100%}
+  .pill{display:inline-block;padding:3px 9px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.07em;text-transform:uppercase;border:1px solid currentColor;white-space:nowrap}
+  .expq{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid rgba(28,26,22,.2);cursor:pointer;background:none;border-left:none;border-right:none;border-top:none;width:100%;text-align:left}
+  .chk{width:14px;height:14px;border:1.4px solid #1C1A16;flex:0 0 auto;display:flex;align-items:center;justify-content:center}
+  .input{width:100%;box-sizing:border-box;background:#fff;border:1px solid rgba(28,26,22,.35);padding:9px 10px;font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:14px;color:#1C1A16;outline:none}
+  .input:focus{border-color:#D9622E}
+  .zbtn{width:26px;height:26px;border:1px solid rgba(28,26,22,.4);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;background:#F5F1E6}
+  .zbtn:hover{border-color:#1C1A16}
+</style>
+</helmet>
+
+<div style="width:100%;min-height:900px;background:#EFE9DB;display:flex;flex-direction:column;font-family:'JetBrains Mono',monospace;color:#1C1A16">
+
+    <div style="padding:40px 48px 0">
+      <a class="backBtn" href="Main.dc.html?view=list">
+        <svg width="12" height="9" viewBox="0 0 14 10" aria-hidden="true"><path d="M14 5H1M6 0 1 5l5 5" stroke="#5B6472" stroke-width="1.3" fill="none"></path></svg>
+        Back to Projects
+      </a>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:18px">
+        <div style="font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:36px;font-weight:800;letter-spacing:-.005em">HOUSE OF SHARMA</div>
+        <span class="label">◆ 001 · RESIDENTIAL</span>
+      </div>
+      <div style="display:flex;gap:24px;margin-top:18px">
+        <a class="tab" href="Main.dc.html">Info</a>
+        <span class="tab active">Scans</span>
+        <a class="tab" href="Archimedes.dc.html">Archimedes</a>
+        <a class="tab" href="Data.dc.html">Data</a>
+      </div>
+      <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px);margin-top:18px"></div>
+    </div>
+
+    <div style="padding:30px 48px 60px;display:grid;grid-template-columns:1.6fr 1fr;gap:28px;align-items:start;max-width:1280px">
+
+      <div style="display:flex;flex-direction:column;gap:22px;min-width:0">
+
+        <div style="display:flex;gap:18px">
+          <button type="button" class="tab {{viewPlanActive}}" onClick="{{setViewPlan}}">Plan</button>
+          <button type="button" class="tab {{view3dActive}}" onClick="{{setView3d}}">3D Point Cloud</button>
+          <button type="button" class="tab {{viewRcpActive}}" onClick="{{setViewRcp}}">Reflected Ceiling Plan</button>
+        </div>
+
+        <div style="position:relative;background:#F5F1E6;border:1px solid rgba(28,26,22,.3);height:360px;display:flex;align-items:center;justify-content:center;overflow:hidden">
+          <div class="crn tl"></div><div class="crn tr"></div><div class="crn bl"></div><div class="crn br"></div>
+
+          <sc-if value="{{isPlanView}}" hint-placeholder-val="{{true}}">
+            <div style="position:relative;width:260px;height:190px;transform:scale({{zoomScale}});transition:transform .2s ease">
+              <button type="button" onClick="{{selectWall1}}" style="position:absolute;top:0;left:0;width:170px;height:120px;border:1.5px solid #1C1A16;background:none;padding:0;cursor:pointer"></button>
+              <div style="position:absolute;top:0;left:170px;width:90px;height:60px;border:1.5px solid #1C1A16;border-left:none;pointer-events:none"></div>
+              <div style="position:absolute;top:120px;left:0;width:260px;height:70px;border:1.5px solid #1C1A16;border-top:none;border-style:dashed;pointer-events:none"></div>
+              <div class="label" style="position:absolute;top:-20px;left:50px;color:#5B6472">3240mm</div>
+              <div class="label" style="position:absolute;top:30px;left:178px;color:#5B6472">920mm</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{isPlanView3d}}" hint-placeholder-val="{{false}}">
+            <span class="label">3D point cloud — awaiting capture import</span>
+          </sc-if>
+          <sc-if value="{{isPlanViewRcp}}" hint-placeholder-val="{{false}}">
+            <span class="label">Reflected ceiling plan — awaiting capture import</span>
+          </sc-if>
+
+          <div style="position:absolute;bottom:14px;left:14px;display:flex;gap:6px">
+            <button type="button" class="zbtn" onClick="{{zoomIn}}">+</button>
+            <button type="button" class="zbtn" onClick="{{zoomOut}}">–</button>
+          </div>
+          <div class="label" style="position:absolute;bottom:18px;right:16px">{{zoomPct}}%</div>
+        </div>
+
+        <div>
+          <div class="row" style="border-bottom:1px solid rgba(28,26,22,.4);cursor:default">
+            <span class="hd">Element</span><span class="hd">Location</span><span class="hd">Dimension</span><span class="hd">Confidence</span><span class="hd">Status</span>
+          </div>
+          <sc-for list="{{elements}}" as="el" hint-placeholder-count="4">
+            <button type="button" class="row {{el.selCls}}" onClick="{{el.onSelect}}">
+              <span class="val">{{el.name}}</span><span class="val">{{el.loc}}</span><span class="val">{{el.display}}</span>
+              <div class="cbar"><div class="track"><div class="fill" style="width:{{el.confidence}}%;background:{{el.confColor}}"></div></div><span class="hd" style="color:{{el.confColor}}">{{el.confidence}}%</span></div>
+              <span class="pill" style="color:{{el.confColor}}">{{el.status}}</span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:26px;min-width:0">
+
+        <sc-if value="{{hasSelection}}" hint-placeholder-val="{{false}}">
+          <div>
+            <div class="label" style="margin-bottom:10px">Selected Element</div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div><div class="hd" style="margin-bottom:3px">Type</div><div class="val">{{sel.name}}</div></div>
+              <div><div class="hd" style="margin-bottom:3px">Location</div><div class="val">{{sel.loc}}</div></div>
+              <div><div class="hd" style="margin-bottom:3px">AI Value</div><div class="val">{{sel.display}}</div></div>
+              <div>
+                <div class="hd" style="margin-bottom:3px">Confidence</div>
+                <div class="cbar"><div class="track"><div class="fill" style="width:{{sel.confidence}}%;background:{{sel.confColor}}"></div></div><span class="hd" style="color:{{sel.confColor}}">{{sel.confidence}}%</span></div>
+              </div>
+              <div>
+                <div class="hd" style="margin-bottom:5px">Manual Override — corrects AI value</div>
+                <input class="input" type="text" value="{{overrideValue}}" onChange="{{setOverride}}">
+                <sc-if value="{{overrideChanged}}" hint-placeholder-val="{{false}}">
+                  <div class="hd" style="color:#D9622E;margin-top:5px">Override will be flagged in output</div>
+                </sc-if>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{noSelection}}" hint-placeholder-val="{{true}}">
+          <div>
+            <div class="label" style="margin-bottom:10px">Selected Element</div>
+            <div class="val" style="color:#8A8372;font-style:italic">Click on an element in the plan or table to view details</div>
+          </div>
+        </sc-if>
+
+        <div style="height:1px;background:rgba(28,26,22,.2)"></div>
+        <div>
+          <div class="label" style="margin-bottom:10px">Annotations</div>
+          <div class="val" style="color:#8A8372;font-style:italic">No annotations for this element</div>
+        </div>
+        <div style="height:1px;background:rgba(28,26,22,.2)"></div>
+        <div>
+          <div class="label" style="margin-bottom:4px">Export Queue</div>
+          <div class="val" style="color:#8A8372;font-size:12px;margin-bottom:6px">Format determines layer structure</div>
+
+          <button type="button" class="expq" onClick="{{toggleDwg}}">
+            <div class="chk">{{dwgMark}}</div>
+            <div><div class="val">DWG Layered</div><div class="hd">for Draughtsman</div></div>
+          </button>
+          <button type="button" class="expq" onClick="{{togglePdf}}">
+            <div class="chk">{{pdfMark}}</div>
+            <div><div class="val">PDF with Dimensions</div><div class="hd">for Contractor</div></div>
+          </button>
+          <button type="button" class="expq" style="border-bottom:none" onClick="{{toggleIfc}}">
+            <div class="chk">{{ifcMark}}</div>
+            <div><div class="val">IFC Model</div><div class="hd">for Consultant</div></div>
+          </button>
+        </div>
+      </div>
+
+    </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedId: null,
+      overrides: {},
+      view: 'plan',
+      zoom: 100,
+      exportSel: { dwg: true, pdf: false, ifc: false },
+    };
+
+    this.selectWall1 = () => this.setState({ selectedId: 'w1' });
+    this.selectEl = (id) => () => this.setState({ selectedId: id });
+
+    this.setViewPlan = () => this.setState({ view: 'plan' });
+    this.setView3d = () => this.setState({ view: '3d' });
+    this.setViewRcp = () => this.setState({ view: 'rcp' });
+
+    this.zoomIn = () => this.setState((s) => ({ zoom: Math.min(200, s.zoom + 10) }));
+    this.zoomOut = () => this.setState((s) => ({ zoom: Math.max(50, s.zoom - 10) }));
+
+    this.setOverride = (e) => {
+      const id = this.state.selectedId;
+      if (!id) return;
+      const v = e.target.value;
+      this.setState((s) => ({ overrides: { ...s.overrides, [id]: v } }));
+    };
+
+    this.toggleDwg = () => this.setState((s) => ({ exportSel: { ...s.exportSel, dwg: !s.exportSel.dwg } }));
+    this.togglePdf = () => this.setState((s) => ({ exportSel: { ...s.exportSel, pdf: !s.exportSel.pdf } }));
+    this.toggleIfc = () => this.setState((s) => ({ exportSel: { ...s.exportSel, ifc: !s.exportSel.ifc } }));
+  }
+
+  renderVals() {
+    const RAW = [
+      { id: 'w1', name: 'Wall', loc: 'Living Room · North', aiValue: 3240, confidence: 62, status: 'Flagged' },
+      { id: 'd1', name: 'Door', loc: 'Kitchen Entry', aiValue: 920, confidence: 94, status: 'Verified' },
+      { id: 'w2', name: 'Window', loc: 'Living Room · East', aiValue: 1500, confidence: 88, status: 'Verified' },
+      { id: 'w3', name: 'Wall', loc: 'Bedroom 1 · South', aiValue: 4100, confidence: 45, status: 'Estimated' },
+    ];
+    const colorFor = (c) => (c >= 80 ? '#2F6F4E' : c >= 50 ? '#D9622E' : '#B8432E');
+
+    const elements = RAW.map((el) => {
+      const ov = this.state.overrides[el.id];
+      const display = (ov !== undefined && ov !== '') ? ov : el.aiValue + 'mm';
+      return {
+        ...el,
+        display,
+        confColor: colorFor(el.confidence),
+        selCls: this.state.selectedId === el.id ? 'selected' : '',
+        onSelect: this.selectEl(el.id),
+      };
+    });
+
+    const sel = elements.find((e) => e.id === this.state.selectedId) || null;
+    const overrideValue = sel ? (this.state.overrides[sel.id] !== undefined ? this.state.overrides[sel.id] : sel.aiValue + 'mm') : '';
+    const overrideChanged = !!(sel && this.state.overrides[sel.id] !== undefined && this.state.overrides[sel.id] !== sel.aiValue + 'mm');
+
+    const view = this.state.view;
+    const mark = (on) => (on ? '✓' : '');
+
+    return {
+      elements,
+      hasSelection: !!sel,
+      noSelection: !sel,
+      sel: sel || { name: '', loc: '', display: '', confidence: 0, confColor: '#8A8372' },
+      overrideValue,
+      overrideChanged,
+      setOverride: this.setOverride,
+
+      selectWall1: this.selectWall1,
+
+      viewPlanActive: view === 'plan' ? 'active' : '',
+      view3dActive: view === '3d' ? 'active' : '',
+      viewRcpActive: view === 'rcp' ? 'active' : '',
+      setViewPlan: this.setViewPlan,
+      setView3d: this.setView3d,
+      setViewRcp: this.setViewRcp,
+      isPlanView: view === 'plan',
+      isPlanView3d: view === '3d',
+      isPlanViewRcp: view === 'rcp',
+
+      zoomPct: this.state.zoom,
+      zoomScale: (this.state.zoom / 100).toFixed(2),
+      zoomIn: this.zoomIn,
+      zoomOut: this.zoomOut,
+
+      dwgMark: mark(this.state.exportSel.dwg),
+      pdfMark: mark(this.state.exportSel.pdf),
+      ifcMark: mark(this.state.exportSel.ifc),
+      toggleDwg: this.toggleDwg,
+      togglePdf: this.togglePdf,
+      toggleIfc: this.toggleIfc,
+    };
+  }
+}
+</script>
+</body>
+</html>

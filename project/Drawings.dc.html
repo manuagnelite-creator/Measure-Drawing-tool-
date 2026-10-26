@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Datum — Drawings</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,380;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  body{margin:0;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .navitem{display:flex;align-items:center;gap:10px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#4A4536;border:1px solid transparent;cursor:pointer}
+  .navitem.active{color:#1C1A16;background:#F5F1E6;border:1px solid rgba(28,26,22,.35);font-weight:600}
+  .label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8A8372}
+  .drow{display:grid;grid-template-columns:52px 1.6fr 1fr .7fr 1fr 110px;gap:14px;align-items:center;padding:16px 4px;border-bottom:1px solid rgba(28,26,22,.2)}
+  .dval{font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:14px;color:#2B2A26}
+  .badge{display:inline-block;padding:3px 9px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.07em;text-transform:uppercase;border:1px solid currentColor;white-space:nowrap}
+  .fileIcon{width:36px;height:36px;border:1px solid rgba(28,26,22,.4);display:flex;align-items:center;justify-content:center;background:#F5F1E6}
+  .dlBtn{background:none;border:1px solid #1C1A16;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;color:#1C1A16}
+  .dlBtn:hover{background:#1C1A16;color:#F5F1E6}
+</style>
+</helmet>
+
+<div style="width:100%;min-height:900px;background:#EFE9DB;display:flex;font-family:'JetBrains Mono',monospace;color:#1C1A16">
+
+  <div style="width:236px;flex:0 0 236px;border-right:1px solid rgba(28,26,22,.3);display:flex;flex-direction:column;padding:28px 18px;box-sizing:border-box;gap:28px">
+    <div>
+      <div style="font-family:'Fraunces',serif;font-size:26px;font-weight:600;letter-spacing:-.01em">TRACE</div>
+      <div style="font-size:10px;letter-spacing:.14em;color:#8A8372;margin-top:4px">SURVEY · DRAFT · EXPORT</div>
+    </div>
+    <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <a class="navitem" href="Main.dc.html">◇ Home</a>
+      <a class="navitem" href="Main.dc.html">◇ Projects</a>
+      <a class="navitem" href="Templates.dc.html">◇ Templates</a>
+      <a class="navitem" href="Spreadsheet.dc.html">◇ Spreadsheet</a>
+      <a class="navitem active" href="Drawings.dc.html">◆ Drawings</a>
+      <a class="navitem" href="Settings.dc.html">◇ Settings</a>
+    </div>
+    <div style="flex:1"></div>
+    <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
+    <div style="font-size:10px;letter-spacing:.1em;color:#8A8372;display:flex;justify-content:space-between">
+      <span>v0.1.0</span><span>LOCAL</span>
+    </div>
+  </div>
+
+  <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+    <div style="padding:40px 48px 30px;border-bottom:1px solid rgba(28,26,22,.3)">
+      <div style="font-family:'Fraunces',serif;font-size:30px;font-weight:600">Drawings</div>
+      <div class="label" style="margin-top:6px;text-transform:none;letter-spacing:.02em;font-size:12px">Exported drawing files across your projects</div>
+    </div>
+
+    <div style="padding:20px 48px 60px">
+      <div class="drow" style="border-bottom:1.5px solid #1C1A16">
+        <span></span><span class="label">File</span><span class="label">Project</span><span class="label">Format</span><span class="label">Exported</span><span></span>
+      </div>
+
+      <sc-for list="{{files}}" as="f" hint-placeholder-count="6">
+        <div class="drow">
+          <div class="fileIcon">
+            <svg width="16" height="18" viewBox="0 0 16 18"><path d="M1 1h9l5 5v11H1z" fill="none" stroke="#1C1A16" stroke-width="1.2"></path><path d="M10 1v5h5" fill="none" stroke="#1C1A16" stroke-width="1.2"></path></svg>
+          </div>
+          <div class="dval">{{f.name}}</div>
+          <div class="dval" style="color:#5B6472;font-size:12px">{{f.project}}</div>
+          <span class="badge" style="color:{{f.color}}">{{f.format}}</span>
+          <div class="dval" style="font-size:12px;color:#8A8372">{{f.date}}</div>
+          <button type="button" class="dlBtn" onClick="{{f.onDownload}}">Download</button>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+
+    this.FILES = [
+      { name: 'HouseOfSharma_FloorPlan.dwg', project: 'House of Sharma', format: 'DWG', color: '#3B5BA5', date: '2026-10-15' },
+      { name: 'HouseOfSharma_Dimensions.pdf', project: 'House of Sharma', format: 'PDF', color: '#D9622E', date: '2026-10-15' },
+      { name: 'OfficeBuilding_Model.ifc', project: 'Office Building', format: 'IFC', color: '#2F6F4E', date: '2026-10-18' },
+      { name: 'ParkAvenueResidence_Dimensions.pdf', project: 'Park Avenue Residence', format: 'PDF', color: '#D9622E', date: '2026-10-16' },
+      { name: 'RajkotRennovation_FloorPlan.dwg', project: 'Rajkot Rennovation', format: 'DWG', color: '#3B5BA5', date: '2026-10-12' },
+    ];
+
+    this.download = (file) => () => {
+      const content =
+        'TRACE — placeholder export\n' +
+        'File: ' + file.name + '\n' +
+        'Project: ' + file.project + '\n' +
+        'Format: ' + file.format + '\n\n' +
+        'This is a stand-in file from the prototype — real ' + file.format + ' generation isn\'t wired up yet.';
+      const blob = new Blob([content], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = file.name.replace(/\.[^.]+$/, '') + '_PLACEHOLDER.txt';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    };
+  }
+
+  renderVals() {
+    return { files: this.FILES.map((f) => ({ ...f, onDownload: this.download(f) })) };
+  }
+}
+</script>
+</body>
+</html>

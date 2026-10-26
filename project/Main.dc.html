@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Datum — Home</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,380;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  body{margin:0;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:#D9622E;color:#F5F1E6}
+  input::placeholder,textarea::placeholder{color:#9A9282}
+  .crn{position:absolute;width:9px;height:9px;pointer-events:none}
+  .crn.tl{top:-1px;left:-1px;border-top:1px solid #1C1A16;border-left:1px solid #1C1A16}
+  .crn.tr{top:-1px;right:-1px;border-top:1px solid #1C1A16;border-right:1px solid #1C1A16}
+  .crn.bl{bottom:-1px;left:-1px;border-bottom:1px solid #1C1A16;border-left:1px solid #1C1A16}
+  .crn.br{bottom:-1px;right:-1px;border-bottom:1px solid #1C1A16;border-right:1px solid #1C1A16}
+  .crnL{position:absolute;width:26px;height:26px;pointer-events:none}
+  .crnL.tl{top:16px;left:16px;border-top:2px solid #1C1A16;border-left:2px solid #1C1A16}
+  .crnL.tr{top:16px;right:16px;border-top:2px solid #1C1A16;border-right:2px solid #1C1A16}
+  .crnL.bl{bottom:16px;left:16px;border-bottom:2px solid #1C1A16;border-left:2px solid #1C1A16}
+  .crnL.br{bottom:16px;right:16px;border-bottom:2px solid #1C1A16;border-right:2px solid #1C1A16}
+  .navitem{display:flex;align-items:center;gap:10px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#4A4536;border:1px solid transparent;cursor:pointer}
+  .navitem:hover{color:#1C1A16}
+  .navitem.active{color:#1C1A16;background:#F5F1E6;border:1px solid rgba(28,26,22,.35);font-weight:600}
+  .card{position:relative;background:#F5F1E6;border:1px solid rgba(28,26,22,.3);padding:22px;display:flex;flex-direction:column;gap:46px;cursor:pointer;transition:border-color .15s,opacity .3s ease;text-align:left;width:100%;font:inherit;color:inherit;appearance:none;-webkit-appearance:none}
+  .card:hover{border-color:#1C1A16}
+  .tab{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:10px 2px;border-bottom:2px solid transparent;color:#8A8372;cursor:pointer}
+  .tab.active{color:#1C1A16;border-bottom-color:#D9622E}
+  .label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8A8372}
+  .backdrop{position:fixed;inset:0;background:#1C1A16;border:none;padding:0;margin:0;z-index:40;cursor:pointer;transition:opacity .55s ease}
+  .ov{position:fixed;z-index:50;background:#EFE9DB;overflow:hidden;box-shadow:0 36px 70px rgba(28,26,22,.28);border:1px solid #1C1A16;transition:left .55s cubic-bezier(.16,1,.3,1),top .55s cubic-bezier(.16,1,.3,1),width .55s cubic-bezier(.16,1,.3,1),height .55s cubic-bezier(.16,1,.3,1)}
+  .backBtn{display:flex;align-items:center;gap:8px;background:none;border:none;padding:6px 10px;margin:-6px -10px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#5B6472;transition:background .15s ease,color .15s ease}
+  .backBtn:hover{color:#1C1A16;background:rgba(28,26,22,.07)}
+  .metaLabel{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8A8372;margin-bottom:6px}
+  .metaVal{font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:14px;color:#2B2A26;line-height:1.5}
+  .photo{position:relative;background:#E3DCC9;border:1px solid rgba(28,26,22,.3);aspect-ratio:4/3;overflow:hidden}
+  .photo img{width:100%;height:100%;object-fit:cover;display:block}
+
+  .addPanel{position:fixed;left:50%;top:50%;z-index:60;width:620px;max-width:calc(100vw - 48px);max-height:calc(100vh - 64px);background:#EFE9DB;border:1px solid #1C1A16;box-shadow:0 40px 80px rgba(28,26,22,.3);overflow:auto;transition:opacity .4s cubic-bezier(.16,1,.3,1),transform .4s cubic-bezier(.16,1,.3,1)}
+  .field{display:flex;flex-direction:column;gap:6px}
+  .input{width:100%;box-sizing:border-box;background:#F5F1E6;border:1px solid rgba(28,26,22,.35);padding:10px 12px;font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:14px;color:#1C1A16;outline:none}
+  .input:focus{border-color:#1C1A16}
+  select.input{appearance:none;-webkit-appearance:none;cursor:pointer;background-image:linear-gradient(45deg,transparent 50%,#1C1A16 50%),linear-gradient(135deg,#1C1A16 50%,transparent 50%);background-position:calc(100% - 18px) center,calc(100% - 13px) center;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+  .dropzone{border:1.5px dashed rgba(28,26,22,.4);background:#F5F1E6;padding:16px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s}
+  .dropzone:hover{border-color:#1C1A16;background:#F0EBDC}
+  .thumbGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+  .thumb{position:relative;aspect-ratio:4/3;background:#E3DCC9;border:1px solid rgba(28,26,22,.3);overflow:hidden}
+  .thumb img,.thumb video{width:100%;height:100%;object-fit:cover;display:block}
+  .thumbX{position:absolute;top:3px;right:3px;width:17px;height:17px;background:#1C1A16;color:#F5F1E6;border:none;font-size:10px;line-height:17px;cursor:pointer;padding:0}
+  .vrow{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(28,26,22,.2)}
+  .listRow{display:flex;align-items:center;justify-content:space-between;width:100%;text-align:left;background:none;border:none;border-bottom:1px solid rgba(28,26,22,.25);padding:4px 10px;margin:0 -10px;cursor:pointer;font:inherit;color:inherit;transition:background .15s ease,padding .15s ease}
+  .listRow:hover{background:#F5F1E6;padding:16px 10px}
+  .listRow:hover .listTime{color:#1C1A16}
+  .btnPrimary{background:#D9622E;color:#F5F1E6;border:1px solid #1C1A16;padding:11px 20px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+  .btnGhost{background:none;border:1px solid rgba(28,26,22,.35);padding:11px 20px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;color:#1C1A16}
+  .btnGhost:hover{border-color:#1C1A16}
+  .closeX{background:none;border:none;cursor:pointer;color:#5B6472;padding:6px;margin:-6px}
+  .closeX:hover{color:#1C1A16}
+</style>
+</helmet>
+
+<div style="width:100%;min-height:900px;background:#EFE9DB;display:flex;font-family:'JetBrains Mono',monospace;color:#1C1A16;opacity:{{gridOpacity}};pointer-events:{{gridPointerEvents}};transition:opacity .3s ease">
+
+  <!-- SIDEBAR -->
+  <div style="width:236px;flex:0 0 236px;border-right:1px solid rgba(28,26,22,.3);display:flex;flex-direction:column;padding:28px 18px;box-sizing:border-box;gap:28px">
+    <div>
+      <div style="font-family:'Fraunces',serif;font-size:26px;font-weight:600;letter-spacing:-.01em">TRACE</div>
+      <div style="font-size:10px;letter-spacing:.14em;color:#8A8372;margin-top:4px">SURVEY · DRAFT · EXPORT</div>
+    </div>
+    <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <a class="navitem {{homeActiveCls}}" href="Main.dc.html">{{homeMark}} Home</a>
+      <a class="navitem {{listActiveCls}}" href="Main.dc.html?view=list">{{listMark}} Projects</a>
+      <a class="navitem" href="Templates.dc.html">◇ Templates</a>
+      <a class="navitem" href="Spreadsheet.dc.html">◇ Spreadsheet</a>
+      <a class="navitem" href="Drawings.dc.html">◇ Drawings</a>
+      <a class="navitem" href="Settings.dc.html">◇ Settings</a>
+    </div>
+    <div style="flex:1"></div>
+    <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
+    <div style="font-size:10px;letter-spacing:.1em;color:#8A8372;display:flex;justify-content:space-between">
+      <span>v0.1.0</span><span>LOCAL</span>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+
+    <!-- TOPBAR -->
+    <div style="display:flex;align-items:center;gap:16px;padding:26px 36px;border-bottom:1px solid rgba(28,26,22,.3)">
+      <div style="flex:1;position:relative;max-width:420px">
+        <input type="text" placeholder="SEARCH PROJECTS…" style="width:100%;box-sizing:border-box;background:#F5F1E6;border:1px solid rgba(28,26,22,.35);padding:11px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;color:#1C1A16;outline:none">
+      </div>
+      <div style="flex:1"></div>
+      <button type="button" onClick="{{openAdd}}" style="display:flex;align-items:center;gap:8px;background:{{accent}};color:#F5F1E6;border:1px solid #1C1A16;padding:11px 18px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer">
+        <svg width="11" height="11" viewBox="0 0 11 11" aria-hidden="true"><path d="M5.5 0v11M0 5.5h11" stroke="#F5F1E6" stroke-width="1.4"></path></svg>
+        New Project
+      </button>
+    </div>
+
+    <!-- BODY -->
+    <sc-if value="{{isHome}}" hint-placeholder-val="{{true}}">
+    <div style="padding:30px 36px 60px;display:flex;flex-direction:column;gap:26px">
+
+      <div style="display:flex;align-items:baseline;justify-content:space-between">
+        <div style="display:flex;gap:26px">
+          <div class="tab active">Recently Viewed</div>
+          <div class="tab">Shared Models</div>
+          <div class="tab">Shared Collaborations</div>
+        </div>
+        <div class="label">{{projectCountLabel}}</div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px">
+
+        <button type="button" class="card" onClick="{{openProject1}}">
+          <div class="crn tl"></div><div class="crn tr"></div><div class="crn bl"></div><div class="crn br"></div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <span class="label">001 · RESIDENTIAL</span>
+            <span class="label" style="color:#D9622E">◆ 2 HOURS AGO</span>
+          </div>
+          <div>
+            <div style="font-family: &quot;JetBrains Mono&quot;; font-size: 22px; font-weight: 500">HOUSE OF SHARMA</div>
+            <div style="font-size:12px;color:#8A8372;margin-top:4px;letter-spacing:.02em">142 Park Avenue, Brooklyn, NY</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(28,26,22,.3);padding-top:14px">
+            <span class="label">4 ELEMENTS · 62% AVG CONF.</span>
+            <svg width="14" height="10" viewBox="0 0 14 10" aria-hidden="true"><path d="M0 5h13M8 0l5 5-5 5" stroke="#1C1A16" stroke-width="1.3" fill="none"></path></svg>
+          </div>
+        </button>
+
+        <button type="button" class="card" onClick="{{openProject2}}">
+          <div class="crn tl"></div><div class="crn tr"></div><div class="crn bl"></div><div class="crn br"></div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <span class="label">002 · COMMERCIAL</span>
+            <span class="label">◇ YESTERDAY</span>
+          </div>
+          <div>
+            <div style="font-family: &quot;JetBrains Mono&quot;; font-size: 22px; font-weight: 500">OFFICE BUILDING</div>
+            <div style="font-size:12px;color:#8A8372;margin-top:4px;letter-spacing:.02em">88 Lafayette St, Manhattan, NY</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(28,26,22,.3);padding-top:14px">
+            <span class="label">12 ELEMENTS · 91% AVG CONF.</span>
+            <svg width="14" height="10" viewBox="0 0 14 10" aria-hidden="true"><path d="M0 5h13M8 0l5 5-5 5" stroke="#1C1A16" stroke-width="1.3" fill="none"></path></svg>
+          </div>
+        </button>
+
+        <button type="button" class="card" onClick="{{openProject3}}">
+          <div class="crn tl"></div><div class="crn tr"></div><div class="crn bl"></div><div class="crn br"></div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <span class="label">003 · RESIDENTIAL</span>
+            <span class="label">◇ 3 DAYS AGO</span>
+          </div>
+          <div>
+            <div style="font-family: &quot;JetBrains Mono&quot;; font-size: 22px; font-weight: 500">PARK AVENUE RESIDENCE</div>
+            <div style="font-size:12px;color:#8A8372;margin-top:4px;letter-spacing:.02em">410 Park Avenue, Manhattan, NY</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(28,26,22,.3);padding-top:14px">
+            <span class="label">7 ELEMENTS · 85% AVG CONF.</span>
+            <svg width="14" height="10" viewBox="0 0 14 10" aria-hidden="true"><path d="M0 5h13M8 0l5 5-5 5" stroke="#1C1A16" stroke-width="1.3" fill="none"></path></svg>
+          </div>
+        </button>
+
+        <button type="button" class="card" onClick="{{openProject4}}">
+          <div class="crn tl"></div><div class="crn tr"></div><div class="crn bl"></div><div class="crn br"></div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <span class="label">004 · RENOVATION</span>
+            <span class="label">◇ 1 WEEK AGO</span>
+          </div>
+          <div>
+            <div style="font-family: &quot;JetBrains Mono&quot;; font-size: 22px; font-weight: 500">RAJKOT RENNOVATION</div>
+            <div style="font-size:12px;color:#8A8372;margin-top:4px;letter-spacing:.02em">Kalawad Road, Rajkot, Gujarat</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(28,26,22,.3);padding-top:14px">
+            <span class="label">9 ELEMENTS · 74% AVG CONF.</span>
+            <svg width="14" height="10" viewBox="0 0 14 10" aria-hidden="true"><path d="M0 5h13M8 0l5 5-5 5" stroke="#1C1A16" stroke-width="1.3" fill="none"></path></svg>
+          </div>
+        </button>
+
+        <sc-for list="{{customProjects}}" as="p" hint-placeholder-count="0">
+          <button type="button" class="card" onClick="{{p.onOpen}}">
+            <div class="crn tl"></div><div class="crn tr"></div><div class="crn bl"></div><div class="crn br"></div>
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <span class="label">{{p.tag}}</span>
+              <span class="label" style="color:#D9622E">◆ {{p.timeAgo}}</span>
+            </div>
+            <div>
+              <div style="font-family: &quot;JetBrains Mono&quot;; font-size: 22px; font-weight: 500">{{p.title}}</div>
+              <div style="font-size:12px;color:#8A8372;margin-top:4px;letter-spacing:.02em">{{p.location}}</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(28,26,22,.3);padding-top:14px">
+              <span class="label">{{p.size}} · NEW SURVEY</span>
+              <svg width="14" height="10" viewBox="0 0 14 10" aria-hidden="true"><path d="M0 5h13M8 0l5 5-5 5" stroke="#1C1A16" stroke-width="1.3" fill="none"></path></svg>
+            </div>
+          </button>
+        </sc-for>
+
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- SIMPLE PROJECT LIST -->
+    <sc-if value="{{isList}}" hint-placeholder-val="{{false}}">
+    <div style="padding:30px 36px 60px;display:flex;flex-direction:column;gap:18px">
+
+      <div style="display:flex;align-items:baseline;justify-content:space-between">
+        <div class="label">Projects</div>
+        <div class="label">{{projectCountLabel}}</div>
+      </div>
+
+      <div style="display:flex;flex-direction:column">
+        <sc-for list="{{listRows}}" as="p" hint-placeholder-count="4">
+          <button type="button" class="listRow" onClick="{{p.onOpen}}">
+            <div style="font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:16px;color:#1C1A16">{{p.title}}</div>
+            <div class="listTime label" style="color:#8A8372">{{p.timeAgo}}</div>
+          </button>
+        </sc-for>
+      </div>
+
+    </div>
+    </sc-if>
+  </div>
+</div>
+
+<sc-if value="{{overlayShow}}" hint-placeholder-val="{{true}}">
+  <button type="button" class="backdrop" aria-label="Close project detail" onClick="{{closeProject}}" style="opacity:{{ov.backdropOpacity}}"></button>
+  <div class="ov" style="left:{{ov.left}}px;top:{{ov.top}}px;width:{{ov.width}}px;height:{{ov.height}}px">
+    <div class="crnL tl"></div><div class="crnL tr"></div><div class="crnL bl"></div><div class="crnL br"></div>
+    <div style="opacity:{{ov.contentOpacity}};transition:opacity .34s ease .2s;height:100%;box-sizing:border-box;padding:56px 64px;display:flex;flex-direction:column;gap:30px;overflow:auto">
+
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <button type="button" class="backBtn" onClick="{{closeProject}}">
+          <svg width="12" height="9" viewBox="0 0 14 10" aria-hidden="true"><path d="M14 5H1M6 0 1 5l5 5" stroke="#5B6472" stroke-width="1.3" fill="none"></path></svg>
+          Back to Projects
+        </button>
+        <span class="label">◆ {{active.tag}} · {{active.timeAgo}}</span>
+      </div>
+
+      <div>
+        <div style="font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:46px;font-weight:800;letter-spacing:-.005em;color:#1C1A16">{{active.title}}</div>
+        <div style="font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:16px;color:#5B6472;margin-top:8px">{{active.location}} &nbsp;·&nbsp; {{active.size}}</div>
+      </div>
+
+      <div style="display:flex;gap:24px">
+        <span class="tab active">Info</span>
+        <a class="tab" href="Scans.dc.html">Scans</a>
+        <a class="tab" href="Archimedes.dc.html">Archimedes</a>
+        <a class="tab" href="Data.dc.html">Data</a>
+      </div>
+
+      <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
+
+      <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:56px;flex:1;min-height:0">
+
+        <div style="display:flex;flex-direction:column;gap:22px;min-width:0">
+          <div>
+            <div class="metaLabel">Date of Documentation</div>
+            <div class="metaVal">{{active.date}}</div>
+          </div>
+          <div>
+            <div class="metaLabel">Site Context</div>
+            <div class="metaVal">{{active.siteContext}}</div>
+          </div>
+          <div>
+            <div class="metaLabel">Client Brief</div>
+            <div class="metaVal" style="color:#8A8372;font-style:italic">Enter client requirements and project brief…</div>
+          </div>
+          <div style="display:flex;gap:28px;border-top:1px solid rgba(28,26,22,.3);padding-top:16px;margin-top:auto">
+            <div>
+              <div class="metaLabel">Elements</div>
+              <div class="metaVal">{{active.elements}}</div>
+            </div>
+            <div>
+              <div class="metaLabel">Avg. Confidence</div>
+              <div class="metaVal">{{active.confidence}}%</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
+          <div class="metaLabel" style="margin-bottom:0">Photos</div>
+
+          <sc-if value="{{activeHasPhotos}}" hint-placeholder-val="{{false}}">
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
+              <sc-for list="{{activePhotos}}" as="ph" hint-placeholder-count="0">
+                <div class="photo"><img src="{{ph.url}}" alt=""></div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{activeNoPhotos}}" hint-placeholder-val="{{true}}">
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
+              <div class="photo"></div>
+              <div class="photo"></div>
+              <div class="photo"></div>
+              <div class="photo"></div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{activeHasVideos}}" hint-placeholder-val="{{false}}">
+            <div class="metaLabel" style="margin-top:6px;margin-bottom:0">Videos</div>
+            <sc-for list="{{activeVideos}}" as="v" hint-placeholder-count="0">
+              <div class="vrow">
+                <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="none" stroke="#1C1A16"></circle><path d="M6.5 5.5v5l4-2.5-4-2.5z" fill="#1C1A16"></path></svg>
+                <span class="metaVal" style="font-size:12px">{{v.name}}</span>
+              </div>
+            </sc-for>
+          </sc-if>
+
+          <button type="button" style="align-self:flex-start;margin-top:4px;background:none;border:none;padding:0;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#1C1A16">Click for more →</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{addShow}}" hint-placeholder-val="{{false}}">
+  <button type="button" class="backdrop" aria-label="Close new project form" onClick="{{closeAdd}}" style="opacity:{{add.backdropOpacity}}"></button>
+  <div class="addPanel" style="opacity:{{add.opacity}};transform:translate(-50%,-50%) scale({{add.scale}})">
+    <div style="padding:30px 36px;display:flex;flex-direction:column;gap:22px">
+
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div>
+          <div class="label">◆ NEW SURVEY</div>
+          <div style="font-family:'Fraunces',serif;font-size:24px;font-weight:600;margin-top:6px">Add Project</div>
+        </div>
+        <button type="button" class="closeX" onClick="{{closeAdd}}" aria-label="Close">
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 1l12 12M13 1 1 13" stroke="currentColor" stroke-width="1.4"></path></svg>
+        </button>
+      </div>
+
+      <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="field" style="grid-column:1 / -1">
+          <label class="metaLabel" for="pname">Project Name</label>
+          <input id="pname" class="input" type="text" placeholder="e.g. Whitefield Residence" value="{{formName}}" onChange="{{setName}}">
+        </div>
+        <div class="field" style="grid-column:1 / -1">
+          <label class="metaLabel" for="ploc">Location</label>
+          <input id="ploc" class="input" type="text" placeholder="Address or site" value="{{formLocation}}" onChange="{{setLocation}}">
+        </div>
+        <div class="field">
+          <label class="metaLabel" for="ptype">Project Type</label>
+          <select id="ptype" class="input" value="{{formType}}" onChange="{{setType}}">
+            <option value="Residential">Residential</option>
+            <option value="Commercial">Commercial</option>
+            <option value="Institutional">Institutional</option>
+            <option value="Renovation">Renovation</option>
+            <option value="Industrial">Industrial</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="metaLabel" for="psize">Size</label>
+          <input id="psize" class="input" type="text" placeholder="e.g. 2,450 sq ft" value="{{formSize}}" onChange="{{setSize}}">
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="metaLabel">Photos</div>
+        <label class="dropzone" onDragOver="{{onDragOver}}" onDrop="{{onDropPhotos}}">
+          <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v11M4 8l6-6 6 6M3 17h14" stroke="#5B6472" stroke-width="1.3" fill="none"></path></svg>
+          <span class="metaVal" style="font-size:12px;color:#5B6472">Drop images here, or click to browse</span>
+          <input type="file" accept="image/*" multiple onChange="{{onPickPhotos}}" style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden">
+        </label>
+        <sc-if value="{{hasFormPhotos}}" hint-placeholder-val="{{false}}">
+          <div class="thumbGrid">
+            <sc-for list="{{formPhotos}}" as="ph" hint-placeholder-count="0">
+              <div class="thumb">
+                <img src="{{ph.url}}" alt="">
+                <button type="button" class="thumbX" onClick="{{ph.onRemove}}" aria-label="Remove photo">×</button>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+
+      <div class="field">
+        <div class="metaLabel">Videos</div>
+        <label class="dropzone" onDragOver="{{onDragOver}}" onDrop="{{onDropVideos}}">
+          <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v11M4 8l6-6 6 6M3 17h14" stroke="#5B6472" stroke-width="1.3" fill="none"></path></svg>
+          <span class="metaVal" style="font-size:12px;color:#5B6472">Drop video files here, or click to browse</span>
+          <input type="file" accept="video/*" multiple onChange="{{onPickVideos}}" style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden">
+        </label>
+        <sc-if value="{{hasFormVideos}}" hint-placeholder-val="{{false}}">
+          <div class="thumbGrid">
+            <sc-for list="{{formVideos}}" as="v" hint-placeholder-count="0">
+              <div class="thumb">
+                <video src="{{v.url}}" muted preload="metadata"></video>
+                <button type="button" class="thumbX" onClick="{{v.onRemove}}" aria-label="Remove video">×</button>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+
+      <sc-if value="{{formError}}" hint-placeholder-val="{{false}}">
+        <div class="metaVal" style="color:#D9622E;font-size:12px">{{formError}}</div>
+      </sc-if>
+
+      <div style="display:flex;justify-content:flex-end;gap:12px;border-top:1px solid rgba(28,26,22,.3);padding-top:18px">
+        <button type="button" class="btnGhost" onClick="{{closeAdd}}">Cancel</button>
+        <button type="button" class="btnPrimary" onClick="{{createProject}}">Create Project</button>
+      </div>
+
+    </div>
+  </div>
+</sc-if>
+
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap"></helmet></x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#D9622E","options":["#D9622E","#1C1A16","#2F6F4E","#3B5BA5"]},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    let initialView = 'home';
+    try {
+      const qp = new URLSearchParams(window.location.search);
+      if (qp.get('view') === 'list') initialView = 'list';
+    } catch (e) {}
+    this.state = {
+      view: initialView,
+      openId: null, phase: 'closed', closedRect: null, openRect: null,
+      customProjects: [],
+      addOpen: false, addPhase: 'closed',
+      formName: '', formLocation: '', formType: 'Residential', formSize: '',
+      formPhotos: [], formVideos: [], formError: '',
+    };
+
+    this.openProject = (id) => (e) => {
+      const r = e.currentTarget.getBoundingClientRect();
+      const closedRect = { left: r.left, top: r.top, width: r.width, height: r.height };
+      const m = 28;
+      const w = Math.max(320, window.innerWidth - m * 2);
+      const h = Math.max(320, window.innerHeight - m * 2);
+      const openRect = { left: m, top: m, width: w, height: h };
+      this.setState({ openId: id, phase: 'opening', closedRect, openRect });
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => { this.setState({ phase: 'open' }); });
+      });
+    };
+
+    this.closeProject = () => {
+      this.setState({ phase: 'closing' });
+      setTimeout(() => {
+        this.setState({ openId: null, phase: 'closed', closedRect: null, openRect: null });
+      }, 560);
+    };
+
+    this.openAdd = () => {
+      this.setState({
+        addOpen: true, addPhase: 'opening',
+        formName: '', formLocation: '', formType: 'Residential', formSize: '',
+        formPhotos: [], formVideos: [], formError: '',
+      });
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => { this.setState({ addPhase: 'open' }); });
+      });
+    };
+
+    this.closeAdd = () => {
+      this.setState({ addPhase: 'closing' });
+      (this.state.formPhotos || []).forEach((p) => { try { URL.revokeObjectURL(p.url); } catch (e) {} });
+      (this.state.formVideos || []).forEach((v) => { try { URL.revokeObjectURL(v.url); } catch (e) {} });
+      setTimeout(() => { this.setState({ addOpen: false, addPhase: 'closed' }); }, 380);
+    };
+
+    this.setName = (e) => this.setState({ formName: e.target.value });
+    this.setLocation = (e) => this.setState({ formLocation: e.target.value });
+    this.setType = (e) => this.setState({ formType: e.target.value });
+    this.setSize = (e) => this.setState({ formSize: e.target.value });
+    this.onDragOver = (e) => { e.preventDefault(); };
+
+    this.ingestFiles = (kind, fileList) => {
+      const files = Array.from(fileList || []);
+      if (!files.length) return;
+      const items = files.map((f) => ({
+        name: f.name,
+        url: URL.createObjectURL(f),
+        key: kind + '-' + Date.now() + '-' + Math.random().toString(36).slice(2),
+      }));
+      if (kind === 'photo') {
+        this.setState((s) => ({ formPhotos: [...s.formPhotos, ...items] }));
+      } else {
+        this.setState((s) => ({ formVideos: [...s.formVideos, ...items] }));
+      }
+    };
+
+    this.onPickPhotos = (e) => { this.ingestFiles('photo', e.target.files); e.target.value = ''; };
+    this.onPickVideos = (e) => { this.ingestFiles('video', e.target.files); e.target.value = ''; };
+    this.onDropPhotos = (e) => {
+      e.preventDefault();
+      const files = Array.from(e.dataTransfer.files || []).filter((f) => f.type.startsWith('image/'));
+      this.ingestFiles('photo', files);
+    };
+    this.onDropVideos = (e) => {
+      e.preventDefault();
+      const files = Array.from(e.dataTransfer.files || []).filter((f) => f.type.startsWith('video/'));
+      this.ingestFiles('video', files);
+    };
+
+    this.removePhotoAt = (key) => () => {
+      this.setState((s) => {
+        const target = s.formPhotos.find((p) => p.key === key);
+        if (target) { try { URL.revokeObjectURL(target.url); } catch (e) {} }
+        return { formPhotos: s.formPhotos.filter((p) => p.key !== key) };
+      });
+    };
+    this.removeVideoAt = (key) => () => {
+      this.setState((s) => {
+        const target = s.formVideos.find((v) => v.key === key);
+        if (target) { try { URL.revokeObjectURL(target.url); } catch (e) {} }
+        return { formVideos: s.formVideos.filter((v) => v.key !== key) };
+      });
+    };
+
+    this.createProject = () => {
+      const name = (this.state.formName || '').trim();
+      if (!name) { this.setState({ formError: 'Project name is required.' }); return; }
+      const num = String(4 + this.state.customProjects.length + 1).padStart(3, '0');
+      const type = this.state.formType || 'Residential';
+      const id = 'c' + Date.now();
+      const newProject = {
+        id,
+        tag: num + ' · ' + type.toUpperCase(),
+        timeAgo: 'JUST NOW',
+        title: name.toUpperCase(),
+        location: (this.state.formLocation || '').trim() || '—',
+        size: (this.state.formSize || '').trim() || '—',
+        date: new Date().toISOString().slice(0, 10),
+        siteContext: 'New project — site context not yet documented.',
+        elements: 0, confidence: 0,
+        photos: this.state.formPhotos,
+        videos: this.state.formVideos,
+      };
+      this.setState((s) => ({ customProjects: [...s.customProjects, newProject] }));
+      this.closeAdd();
+    };
+  }
+
+  renderVals() {
+    const BASE = {
+      1: { tag: '001 · RESIDENTIAL', timeAgo: '2 HOURS AGO', title: 'HOUSE OF SHARMA', location: '142 Park Avenue, Brooklyn, NY', size: '2,450 SQ FT', date: '2026-10-15', siteContext: 'Pre-war brick rowhouse with rear yard addition; existing timber floor joists throughout.', elements: 4, confidence: 62, photos: [], videos: [] },
+      2: { tag: '002 · COMMERCIAL', timeAgo: 'YESTERDAY', title: 'OFFICE BUILDING', location: '88 Lafayette St, Manhattan, NY', size: '18,200 SQ FT', date: '2026-10-18', siteContext: 'Six-storey loft conversion; cast-iron facade, open floor plates on levels 2–5.', elements: 12, confidence: 91, photos: [], videos: [] },
+      3: { tag: '003 · RESIDENTIAL', timeAgo: '3 DAYS AGO', title: 'PARK AVENUE RESIDENCE', location: '410 Park Avenue, Manhattan, NY', size: '4,120 SQ FT', date: '2026-10-16', siteContext: 'Full-floor apartment, pre-war construction; existing plaster ceilings to be surveyed for service runs.', elements: 7, confidence: 85, photos: [], videos: [] },
+      4: { tag: '004 · RENOVATION', timeAgo: '1 WEEK AGO', title: 'RAJKOT RENNOVATION', location: 'Kalawad Road, Rajkot, Gujarat', size: '3,080 SQ FT', date: '2026-10-12', siteContext: 'Two-storey residence undergoing partial renovation; RCC frame, existing brick infill walls.', elements: 9, confidence: 74, photos: [], videos: [] },
+    };
+
+    const ALL = { ...BASE };
+    this.state.customProjects.forEach((p) => { ALL[p.id] = p; });
+
+    const phase = this.state.phase;
+    const openId = this.state.openId;
+    const active = openId ? ALL[openId] : null;
+    const rectNow = (phase === 'open') ? this.state.openRect : this.state.closedRect;
+    const r = rectNow || { left: 0, top: 0, width: 0, height: 0 };
+    const showingOrLeaving = phase === 'opening' || phase === 'open' || phase === 'closing';
+
+    const addPhase = this.state.addPhase;
+    const addShowingOrLeaving = addPhase === 'opening' || addPhase === 'open' || addPhase === 'closing';
+    const anyOverlay = showingOrLeaving || addShowingOrLeaving;
+
+    const activePhotos = (active && active.photos) || [];
+    const activeVideos = (active && active.videos) || [];
+
+    const isHome = this.state.view !== 'list';
+    const isList = this.state.view === 'list';
+    const listRows = Object.entries(ALL).map(([key, p]) => {
+      const id = p.id !== undefined ? p.id : (isNaN(Number(key)) ? key : Number(key));
+      return { ...p, onOpen: this.openProject(id) };
+    });
+
+    return {
+      accent: this.props.accent ?? '#D9622E',
+
+      isHome, isList,
+      homeActiveCls: isHome ? 'active' : '',
+      listActiveCls: isList ? 'active' : '',
+      homeMark: isHome ? '◆' : '◇',
+      listMark: isList ? '◆' : '◇',
+      listRows,
+
+      openProject1: this.openProject(1),
+      openProject2: this.openProject(2),
+      openProject3: this.openProject(3),
+      openProject4: this.openProject(4),
+      closeProject: this.closeProject,
+      overlayShow: !!openId,
+
+      gridOpacity: anyOverlay ? 0.25 : 1,
+      gridPointerEvents: anyOverlay ? 'none' : 'auto',
+
+      projectCountLabel: String(4 + this.state.customProjects.length).padStart(2, '0') + ' PROJECTS',
+
+      customProjects: this.state.customProjects.map((p) => ({ ...p, onOpen: this.openProject(p.id) })),
+
+      active: active || { tag: '', timeAgo: '', title: '', location: '', size: '', date: '', siteContext: '', elements: '', confidence: '' },
+      activeHasPhotos: activePhotos.length > 0,
+      activeNoPhotos: activePhotos.length === 0,
+      activePhotos,
+      activeHasVideos: activeVideos.length > 0,
+      activeVideos,
+
+      ov: {
+        left: Math.round(r.left), top: Math.round(r.top), width: Math.round(r.width), height: Math.round(r.height),
+        backdropOpacity: showingOrLeaving ? 1 : 0,
+        contentOpacity: phase === 'open' ? 1 : 0,
+      },
+
+      addShow: this.state.addOpen,
+      openAdd: this.openAdd,
+      closeAdd: this.closeAdd,
+      add: {
+        opacity: addPhase === 'open' ? 1 : 0,
+        scale: addPhase === 'open' ? 1 : 0.96,
+        backdropOpacity: addShowingOrLeaving ? 1 : 0,
+      },
+      formName: this.state.formName,
+      formLocation: this.state.formLocation,
+      formType: this.state.formType,
+      formSize: this.state.formSize,
+      formError: this.state.formError,
+      setName: this.setName,
+      setLocation: this.setLocation,
+      setType: this.setType,
+      setSize: this.setSize,
+      onDragOver: this.onDragOver,
+      onPickPhotos: this.onPickPhotos,
+      onPickVideos: this.onPickVideos,
+      onDropPhotos: this.onDropPhotos,
+      onDropVideos: this.onDropVideos,
+      hasFormPhotos: this.state.formPhotos.length > 0,
+      hasFormVideos: this.state.formVideos.length > 0,
+      formPhotos: this.state.formPhotos.map((p) => ({ ...p, onRemove: this.removePhotoAt(p.key) })),
+      formVideos: this.state.formVideos.map((v) => ({ ...v, onRemove: this.removeVideoAt(v.key) })),
+      createProject: this.createProject,
+    };
+  }
+}
+</script>
+</body>
+</html>

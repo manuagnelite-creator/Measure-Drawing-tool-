@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Datum — Settings</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,380;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  body{margin:0;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .navitem{display:flex;align-items:center;gap:10px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#4A4536;border:1px solid transparent;cursor:pointer}
+  .navitem.active{color:#1C1A16;background:#F5F1E6;border:1px solid rgba(28,26,22,.35);font-weight:600}
+  .label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8A8372}
+  .section{display:flex;flex-direction:column;gap:16px;padding:26px 0;border-bottom:1px solid rgba(28,26,22,.25);max-width:680px}
+  .rowBetween{display:flex;justify-content:space-between;align-items:center;gap:20px}
+  .segBtn{background:#F5F1E6;border:1px solid rgba(28,26,22,.35);padding:8px 16px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;color:#1C1A16}
+  .segBtn.active{background:#1C1A16;color:#F5F1E6;border-color:#1C1A16}
+  .swatch{width:28px;height:28px;border:2px solid transparent;cursor:pointer;padding:0}
+  .swatch.active{border-color:#1C1A16}
+  .toggle{width:38px;height:20px;border:1px solid #1C1A16;position:relative;cursor:pointer;background:#F5F1E6;padding:0}
+  .toggle .knob{position:absolute;top:1px;left:1px;width:16px;height:16px;background:#8A8372;transition:left .15s ease,background .15s ease}
+  .toggle.on{background:#1C1A16}
+  .toggle.on .knob{left:19px;background:#D9622E}
+  .input{box-sizing:border-box;background:#F5F1E6;border:1px solid rgba(28,26,22,.35);padding:9px 12px;font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:14px;color:#1C1A16;outline:none}
+  .statBox{background:#F5F1E6;border:1px solid rgba(28,26,22,.3);padding:16px}
+  .btnPrimary{background:#D9622E;color:#F5F1E6;border:1px solid #1C1A16;padding:11px 22px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+</style>
+</helmet>
+
+<div style="width:100%;min-height:900px;background:#EFE9DB;display:flex;font-family:'JetBrains Mono',monospace;color:#1C1A16">
+
+  <div style="width:236px;flex:0 0 236px;border-right:1px solid rgba(28,26,22,.3);display:flex;flex-direction:column;padding:28px 18px;box-sizing:border-box;gap:28px">
+    <div>
+      <div style="font-family:'Fraunces',serif;font-size:26px;font-weight:600;letter-spacing:-.01em">TRACE</div>
+      <div style="font-size:10px;letter-spacing:.14em;color:#8A8372;margin-top:4px">SURVEY · DRAFT · EXPORT</div>
+    </div>
+    <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <a class="navitem" href="Main.dc.html">◇ Home</a>
+      <a class="navitem" href="Main.dc.html">◇ Projects</a>
+      <a class="navitem" href="Templates.dc.html">◇ Templates</a>
+      <a class="navitem" href="Spreadsheet.dc.html">◇ Spreadsheet</a>
+      <a class="navitem" href="Drawings.dc.html">◇ Drawings</a>
+      <a class="navitem active" href="Settings.dc.html">◆ Settings</a>
+    </div>
+    <div style="flex:1"></div>
+    <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
+    <div style="font-size:10px;letter-spacing:.1em;color:#8A8372;display:flex;justify-content:space-between">
+      <span>v0.1.0</span><span>LOCAL</span>
+    </div>
+  </div>
+
+  <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+    <div style="padding:40px 48px 30px;border-bottom:1px solid rgba(28,26,22,.3)">
+      <div style="font-family:'Fraunces',serif;font-size:30px;font-weight:600">Settings</div>
+      <div class="label" style="margin-top:6px;text-transform:none;letter-spacing:.02em;font-size:12px">Preferences for this workspace</div>
+    </div>
+
+    <div style="padding:10px 48px 60px">
+
+      <div class="section">
+        <div class="label">Measurement Units</div>
+        <div style="display:flex;gap:8px">
+          <button type="button" class="segBtn {{unitMmActive}}" onClick="{{setUnitMm}}">Millimetres</button>
+          <button type="button" class="segBtn {{unitFtActive}}" onClick="{{setUnitFt}}">Feet &amp; Inches</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="label">Accent Colour</div>
+        <div style="display:flex;gap:10px">
+          <sc-for list="{{swatches}}" as="sw" hint-placeholder-count="4">
+            <button type="button" class="swatch {{sw.activeCls}}" style="background:{{sw.hex}}" onClick="{{sw.onPick}}" aria-label="{{sw.hex}}"></button>
+          </sc-for>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="rowBetween">
+          <div>
+            <div class="label">Email Updates</div>
+            <div style="font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:13px;color:#5B6472;margin-top:3px">Weekly summary of project activity</div>
+          </div>
+          <button type="button" class="toggle {{notifEmail}}" onClick="{{toggleEmail}}" aria-label="Toggle email updates"><div class="knob"></div></button>
+        </div>
+        <div class="rowBetween">
+          <div>
+            <div class="label">Export Alerts</div>
+            <div style="font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:13px;color:#5B6472;margin-top:3px">Notify when a DWG / PDF / IFC export finishes</div>
+          </div>
+          <button type="button" class="toggle {{notifExport}}" onClick="{{toggleExport}}" aria-label="Toggle export alerts"><div class="knob"></div></button>
+        </div>
+        <div class="rowBetween">
+          <div>
+            <div class="label">Low-Confidence Flags</div>
+            <div style="font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:13px;color:#5B6472;margin-top:3px">Warn before exporting elements under 70% confidence</div>
+          </div>
+          <button type="button" class="toggle {{notifConf}}" onClick="{{toggleConf}}" aria-label="Toggle low-confidence flags"><div class="knob"></div></button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="label">Account</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <input class="input" type="text" value="{{accountName}}" onChange="{{setAccountName}}">
+          <input class="input" type="email" value="{{accountEmail}}" onChange="{{setAccountEmail}}">
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="label">Local Storage</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+          <div class="statBox"><div class="label">Files</div><div style="font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:20px;margin-top:6px">1,482</div></div>
+          <div class="statBox"><div class="label">Storage Used</div><div style="font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:20px;margin-top:6px">12.7 GB</div></div>
+          <div class="statBox"><div class="label">Last Backup</div><div style="font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:20px;margin-top:6px">2h ago</div></div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:16px;padding-top:24px">
+        <button type="button" class="btnPrimary" onClick="{{save}}">Save Changes</button>
+        <sc-if value="{{saved}}" hint-placeholder-val="{{false}}">
+          <span class="label" style="color:#2F6F4E">◆ Saved</span>
+        </sc-if>
+      </div>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      unit: 'mm',
+      accent: '#D9622E',
+      notifEmail: true,
+      notifExport: true,
+      notifConf: false,
+      accountName: 'Demo Account',
+      accountEmail: 'demo@trace.app',
+      saved: false,
+    };
+
+    this.setUnitMm = () => this.setState({ unit: 'mm' });
+    this.setUnitFt = () => this.setState({ unit: 'ft' });
+    this.pickAccent = (hex) => () => this.setState({ accent: hex });
+    this.toggleEmail = () => this.setState((s) => ({ notifEmail: !s.notifEmail }));
+    this.toggleExport = () => this.setState((s) => ({ notifExport: !s.notifExport }));
+    this.toggleConf = () => this.setState((s) => ({ notifConf: !s.notifConf }));
+    this.setAccountName = (e) => this.setState({ accountName: e.target.value });
+    this.setAccountEmail = (e) => this.setState({ accountEmail: e.target.value });
+
+    this.saveTimer = null;
+    this.save = () => {
+      this.setState({ saved: true });
+      if (this.saveTimer) clearTimeout(this.saveTimer);
+      this.saveTimer = setTimeout(() => this.setState({ saved: false }), 2200);
+    };
+  }
+
+  renderVals() {
+    const PALETTE = ['#D9622E', '#1C1A16', '#2F6F4E', '#3B5BA5'];
+    return {
+      unitMmActive: this.state.unit === 'mm' ? 'active' : '',
+      unitFtActive: this.state.unit === 'ft' ? 'active' : '',
+      setUnitMm: this.setUnitMm, setUnitFt: this.setUnitFt,
+
+      swatches: PALETTE.map((hex) => ({ hex, activeCls: this.state.accent === hex ? 'active' : '', onPick: this.pickAccent(hex) })),
+
+      notifEmail: this.state.notifEmail ? 'on' : '',
+      notifExport: this.state.notifExport ? 'on' : '',
+      notifConf: this.state.notifConf ? 'on' : '',
+      toggleEmail: this.toggleEmail, toggleExport: this.toggleExport, toggleConf: this.toggleConf,
+
+      accountName: this.state.accountName,
+      accountEmail: this.state.accountEmail,
+      setAccountName: this.setAccountName,
+      setAccountEmail: this.setAccountEmail,
+
+      saved: this.state.saved,
+      save: this.save,
+    };
+  }
+}
+</script>
+</body>
+</html>

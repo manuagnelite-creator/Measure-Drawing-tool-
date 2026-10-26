@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Datum — Spreadsheet</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,380;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  body{margin:0;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .navitem{display:flex;align-items:center;gap:10px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#4A4536;border:1px solid transparent;cursor:pointer}
+  .navitem.active{color:#1C1A16;background:#F5F1E6;border:1px solid rgba(28,26,22,.35);font-weight:600}
+  .label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8A8372}
+  .btnOutline{background:none;border:1px solid #1C1A16;padding:9px 16px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;color:#1C1A16}
+  .btnOutline:hover{background:#1C1A16;color:#F5F1E6}
+  .ghost{background:none;border:1px solid rgba(28,26,22,.35);width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:13px}
+  .ghost:hover{border-color:#1C1A16}
+  .cell{border:1px solid rgba(28,26,22,.2);background:#fff;padding:0}
+  .cellIn{width:100%;box-sizing:border-box;border:none;background:none;padding:8px 10px;font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:13px;color:#2B2A26;outline:none}
+  .cellIn:focus{background:#FFF8E8}
+  .rownum{background:#F5F1E6;border:1px solid rgba(28,26,22,.2);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:#8A8372}
+  .colhd{background:#1C1A16;color:#F5F1E6;border:1px solid #1C1A16;padding:8px 10px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+</style>
+</helmet>
+
+<div style="width:100%;min-height:900px;background:#EFE9DB;display:flex;font-family:'JetBrains Mono',monospace;color:#1C1A16">
+
+  <div style="width:236px;flex:0 0 236px;border-right:1px solid rgba(28,26,22,.3);display:flex;flex-direction:column;padding:28px 18px;box-sizing:border-box;gap:28px">
+    <div>
+      <div style="font-family:'Fraunces',serif;font-size:26px;font-weight:600;letter-spacing:-.01em">TRACE</div>
+      <div style="font-size:10px;letter-spacing:.14em;color:#8A8372;margin-top:4px">SURVEY · DRAFT · EXPORT</div>
+    </div>
+    <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <a class="navitem" href="Main.dc.html">◇ Home</a>
+      <a class="navitem" href="Main.dc.html">◇ Projects</a>
+      <a class="navitem" href="Templates.dc.html">◇ Templates</a>
+      <a class="navitem active" href="Spreadsheet.dc.html">◆ Spreadsheet</a>
+      <a class="navitem" href="Drawings.dc.html">◇ Drawings</a>
+      <a class="navitem" href="Settings.dc.html">◇ Settings</a>
+    </div>
+    <div style="flex:1"></div>
+    <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px)"></div>
+    <div style="font-size:10px;letter-spacing:.1em;color:#8A8372;display:flex;justify-content:space-between">
+      <span>v0.1.0</span><span>LOCAL</span>
+    </div>
+  </div>
+
+  <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+    <div style="padding:40px 48px 30px;border-bottom:1px solid rgba(28,26,22,.3);display:flex;justify-content:space-between;align-items:flex-end">
+      <div>
+        <div style="font-family:'Fraunces',serif;font-size:30px;font-weight:600">Spreadsheet</div>
+        <div class="label" style="margin-top:6px;text-transform:none;letter-spacing:.02em;font-size:12px">Raw measurement data across your projects</div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button type="button" class="ghost" onClick="{{addRow}}" aria-label="Add row">+</button>
+        <button type="button" class="ghost" onClick="{{removeRow}}" aria-label="Remove last row">–</button>
+        <button type="button" class="btnOutline" onClick="{{exportCsv}}">Export CSV</button>
+      </div>
+    </div>
+
+    <div style="padding:30px 48px 60px;overflow:auto">
+      <div style="display:grid;grid-template-columns:40px repeat(6,1fr);min-width:900px">
+
+        <div class="rownum" style="background:#1C1A16"></div>
+        <sc-for list="{{headers}}" as="h" hint-placeholder-count="6">
+          <div class="colhd">{{h}}</div>
+        </sc-for>
+
+        <sc-for list="{{rows}}" as="row" hint-placeholder-count="6">
+          <div class="rownum">{{row.n}}</div>
+          <sc-for list="{{row.cells}}" as="c" hint-placeholder-count="6">
+            <div class="cell"><input class="cellIn" type="text" value="{{c.value}}" onChange="{{c.onChange}}"></div>
+          </sc-for>
+        </sc-for>
+
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [
+        ['House of Sharma', 'Wall', 'Living Room · North', '3240mm', '62%', 'Flagged'],
+        ['House of Sharma', 'Door', 'Kitchen Entry', '920mm', '94%', 'Verified'],
+        ['Office Building', 'Window', 'Level 3 · East', '1800mm', '91%', 'Verified'],
+        ['Park Avenue Residence', 'Wall', 'Study · North', '2960mm', '85%', 'Verified'],
+        ['Rajkot Rennovation', 'Wall', 'Courtyard · West', '4400mm', '74%', 'Estimated'],
+      ],
+    };
+    this.HEADERS = ['Project', 'Element', 'Location', 'Dimension', 'Confidence', 'Status'];
+
+    this.setCell = (r, c) => (e) => {
+      this.setState((s) => {
+        const data = s.data.map((row) => row.slice());
+        data[r][c] = e.target.value;
+        return { data };
+      });
+    };
+    this.addRow = () => this.setState((s) => ({ data: [...s.data, ['', '', '', '', '', '']] }));
+    this.removeRow = () => this.setState((s) => (s.data.length > 1 ? { data: s.data.slice(0, -1) } : s));
+    this.exportCsv = () => {
+      const rows = [this.HEADERS, ...this.state.data];
+      const csv = rows.map((r) => r.map((c) => '"' + String(c).replace(/"/g, '""') + '"').join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'trace-spreadsheet.csv';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    };
+  }
+
+  renderVals() {
+    const rows = this.state.data.map((row, r) => ({
+      n: r + 1,
+      cells: row.map((v, c) => ({ value: v, onChange: this.setCell(r, c) })),
+    }));
+    return { headers: this.HEADERS, rows, addRow: this.addRow, removeRow: this.removeRow, exportCsv: this.exportCsv };
+  }
+}
+</script>
+</body>
+</html>

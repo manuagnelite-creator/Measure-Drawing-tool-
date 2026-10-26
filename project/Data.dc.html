@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Datum — Data</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,380;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  body{margin:0;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .navitem{display:flex;align-items:center;gap:10px;padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#4A4536;border:1px solid transparent;cursor:pointer}
+  .navitem.active{color:#1C1A16;background:#F5F1E6;border:1px solid rgba(28,26,22,.35);font-weight:600}
+  .tab{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:10px 2px;border-bottom:2px solid transparent;color:#8A8372;cursor:pointer;background:none;border-left:none;border-right:none;border-top:none}
+  .tab.active{color:#1C1A16;border-bottom-color:#D9622E}
+  .label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8A8372}
+  .backBtn{display:flex;align-items:center;gap:8px;background:none;border:none;padding:6px 10px;margin:-6px -10px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#5B6472;transition:background .15s ease,color .15s ease}
+  .backBtn:hover{color:#1C1A16;background:rgba(28,26,22,.07)}
+  .btnOutline{background:none;border:1px solid #1C1A16;padding:9px 16px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;color:#1C1A16}
+  .btnOutline:hover{background:#1C1A16;color:#F5F1E6}
+  .drow{display:grid;gap:12px;padding:13px 4px;border-bottom:1px solid rgba(28,26,22,.2);align-items:center}
+  .dhd{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8A8372}
+  .dval{font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:14px;color:#2B2A26}
+  .dtotal{background:#F5F1E6;font-weight:700;border-top:1.5px solid #1C1A16;border-bottom:none}
+  .stat{background:#F5F1E6;border:1px solid rgba(28,26,22,.3);padding:20px}
+</style>
+</helmet>
+
+<div style="width:100%;min-height:900px;background:#EFE9DB;display:flex;flex-direction:column;font-family:'JetBrains Mono',monospace;color:#1C1A16">
+
+    <div style="padding:40px 48px 0">
+      <a class="backBtn" href="Main.dc.html?view=list">
+        <svg width="12" height="9" viewBox="0 0 14 10" aria-hidden="true"><path d="M14 5H1M6 0 1 5l5 5" stroke="#5B6472" stroke-width="1.3" fill="none"></path></svg>
+        Back to Projects
+      </a>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:18px">
+        <div style="font-family:'Avenir Next Condensed','Avenir Next','Avenir','Helvetica Neue',Arial,sans-serif;font-size:36px;font-weight:800;letter-spacing:-.005em">HOUSE OF SHARMA</div>
+        <span class="label">◆ 001 · RESIDENTIAL</span>
+      </div>
+      <div style="display:flex;gap:24px;margin-top:18px">
+        <a class="tab" href="Main.dc.html">Info</a>
+        <a class="tab" href="Scans.dc.html">Scans</a>
+        <a class="tab" href="Archimedes.dc.html">Archimedes</a>
+        <span class="tab active">Data</span>
+      </div>
+      <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(28,26,22,.4) 0 3px,transparent 3px 7px);margin-top:18px"></div>
+    </div>
+
+    <div style="padding:30px 48px 60px;max-width:1280px">
+
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px">
+        <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:600">Project Data Dashboard</div>
+        <button class="btnOutline" type="button" onClick="{{exportAll}}">Export All Data</button>
+      </div>
+
+      <div style="display:flex;gap:24px;margin-bottom:18px">
+        <button type="button" class="tab {{tabAreasActive}}" onClick="{{setTabAreas}}">Areas List</button>
+        <button type="button" class="tab {{tabDoorsActive}}" onClick="{{setTabDoors}}">Door &amp; Window Schedule</button>
+        <button type="button" class="tab {{tabSoilActive}}" onClick="{{setTabSoil}}">Soil Analysis</button>
+        <button type="button" class="tab {{tabClimateActive}}" onClick="{{setTabClimate}}">Climate Mapping</button>
+      </div>
+
+      <sc-if value="{{isAreas}}" hint-placeholder-val="{{true}}">
+        <div style="background:#F5F1E6;border:1px solid rgba(28,26,22,.3);padding:22px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <div class="dval" style="font-weight:700">Room Areas &amp; Volumes</div>
+            <button class="btnOutline" type="button" style="padding:6px 12px" onClick="{{exportAreas}}">Export CSV</button>
+          </div>
+          <div class="drow" style="border-bottom:1.5px solid #1C1A16;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr">
+            <span class="dhd">Room Name</span><span class="dhd">Area (ft²)</span><span class="dhd">Perimeter (ft)</span><span class="dhd">Height (ft)</span><span class="dhd">Volume (ft³)</span>
+          </div>
+          <div class="drow" style="grid-template-columns:1.4fr 1fr 1fr 1fr 1fr"><span class="dval">Living Room</span><span class="dval">324</span><span class="dval">82</span><span class="dval">9</span><span class="dval">2916</span></div>
+          <div class="drow" style="grid-template-columns:1.4fr 1fr 1fr 1fr 1fr"><span class="dval">Kitchen</span><span class="dval">186</span><span class="dval">56</span><span class="dval">9</span><span class="dval">1674</span></div>
+          <div class="drow" style="grid-template-columns:1.4fr 1fr 1fr 1fr 1fr"><span class="dval">Bedroom 1</span><span class="dval">215</span><span class="dval">64</span><span class="dval">9</span><span class="dval">1935</span></div>
+          <div class="drow" style="grid-template-columns:1.4fr 1fr 1fr 1fr 1fr"><span class="dval">Bedroom 2</span><span class="dval">198</span><span class="dval">60</span><span class="dval">9</span><span class="dval">1782</span></div>
+          <div class="drow" style="grid-template-columns:1.4fr 1fr 1fr 1fr 1fr"><span class="dval">Bathroom</span><span class="dval">84</span><span class="dval">38</span><span class="dval">9</span><span class="dval">756</span></div>
+          <div class="drow" style="grid-template-columns:1.4fr 1fr 1fr 1fr 1fr"><span class="dval">Hallway</span><span class="dval">52</span><span class="dval">42</span><span class="dval">9</span><span class="dval">468</span></div>
+          <div class="drow dtotal" style="grid-template-columns:1.4fr 1fr 1fr 1fr 1fr"><span class="dval">Total</span><span class="dval">1059</span><span class="dval">—</span><span class="dval">—</span><span class="dval">9531</span></div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{isDoors}}" hint-placeholder-val="{{false}}">
+        <div style="background:#F5F1E6;border:1px solid rgba(28,26,22,.3);padding:22px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <div class="dval" style="font-weight:700">Door &amp; Window Schedule</div>
+            <button class="btnOutline" type="button" style="padding:6px 12px" onClick="{{exportDoors}}">Export CSV</button>
+          </div>
+          <div class="drow" style="border-bottom:1.5px solid #1C1A16;grid-template-columns:.7fr 1fr 1.4fr 1fr 1fr 1fr">
+            <span class="dhd">ID</span><span class="dhd">Type</span><span class="dhd">Location</span><span class="dhd">Width</span><span class="dhd">Height</span><span class="dhd">Material</span>
+          </div>
+          <div class="drow" style="grid-template-columns:.7fr 1fr 1.4fr 1fr 1fr 1fr"><span class="dval">D-01</span><span class="dval">Door</span><span class="dval">Kitchen Entry</span><span class="dval">920mm</span><span class="dval">2100mm</span><span class="dval">Timber</span></div>
+          <div class="drow" style="grid-template-columns:.7fr 1fr 1.4fr 1fr 1fr 1fr"><span class="dval">D-02</span><span class="dval">Door</span><span class="dval">Bedroom 1 Entry</span><span class="dval">810mm</span><span class="dval">2050mm</span><span class="dval">Timber</span></div>
+          <div class="drow" style="grid-template-columns:.7fr 1fr 1.4fr 1fr 1fr 1fr"><span class="dval">W-01</span><span class="dval">Window</span><span class="dval">Living Room · East</span><span class="dval">1500mm</span><span class="dval">1200mm</span><span class="dval">Aluminium</span></div>
+          <div class="drow" style="grid-template-columns:.7fr 1fr 1.4fr 1fr 1fr 1fr"><span class="dval">W-02</span><span class="dval">Window</span><span class="dval">Bedroom 1 · South</span><span class="dval">1100mm</span><span class="dval">1200mm</span><span class="dval">Aluminium</span></div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{isSoil}}" hint-placeholder-val="{{false}}">
+        <div style="background:#F5F1E6;border:1px solid rgba(28,26,22,.3);padding:22px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <div class="dval" style="font-weight:700">Soil Analysis</div>
+            <button class="btnOutline" type="button" style="padding:6px 12px" onClick="{{exportSoil}}">Export CSV</button>
+          </div>
+          <div class="drow" style="border-bottom:1.5px solid #1C1A16;grid-template-columns:1fr 1fr 1.3fr 1fr">
+            <span class="dhd">Test Point</span><span class="dhd">Depth (m)</span><span class="dhd">Bearing Capacity</span><span class="dhd">Soil Type</span>
+          </div>
+          <div class="drow" style="grid-template-columns:1fr 1fr 1.3fr 1fr"><span class="dval">TP-01</span><span class="dval">1.5</span><span class="dval">150 kN/m²</span><span class="dval">Clayey Sand</span></div>
+          <div class="drow" style="grid-template-columns:1fr 1fr 1.3fr 1fr"><span class="dval">TP-02</span><span class="dval">1.8</span><span class="dval">180 kN/m²</span><span class="dval">Sandy Loam</span></div>
+          <div class="drow" style="grid-template-columns:1fr 1fr 1.3fr 1fr"><span class="dval">TP-03</span><span class="dval">1.6</span><span class="dval">165 kN/m²</span><span class="dval">Clayey Sand</span></div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{isClimate}}" hint-placeholder-val="{{false}}">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+          <div class="stat"><div class="dhd">Avg. Temperature</div><div class="dval" style="font-size:24px;margin-top:6px">27°C</div></div>
+          <div class="stat"><div class="dhd">Annual Rainfall</div><div class="dval" style="font-size:24px;margin-top:6px">890 mm</div></div>
+          <div class="stat"><div class="dhd">Peak Sun Hours</div><div class="dval" style="font-size:24px;margin-top:6px">6.2 h</div></div>
+          <div class="stat"><div class="dhd">Prevailing Wind</div><div class="dval" style="font-size:24px;margin-top:6px">SW · 11 km/h</div></div>
+        </div>
+      </sc-if>
+
+    </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'areas' };
+
+    this.setTabAreas = () => this.setState({ tab: 'areas' });
+    this.setTabDoors = () => this.setState({ tab: 'doors' });
+    this.setTabSoil = () => this.setState({ tab: 'soil' });
+    this.setTabClimate = () => this.setState({ tab: 'climate' });
+
+    this.AREAS = [
+      ['Room Name', 'Area (ft²)', 'Perimeter (ft)', 'Height (ft)', 'Volume (ft³)'],
+      ['Living Room', 324, 82, 9, 2916], ['Kitchen', 186, 56, 9, 1674],
+      ['Bedroom 1', 215, 64, 9, 1935], ['Bedroom 2', 198, 60, 9, 1782],
+      ['Bathroom', 84, 38, 9, 756], ['Hallway', 52, 42, 9, 468],
+      ['Total', 1059, '—', '—', 9531],
+    ];
+    this.DOORS = [
+      ['ID', 'Type', 'Location', 'Width', 'Height', 'Material'],
+      ['D-01', 'Door', 'Kitchen Entry', '920mm', '2100mm', 'Timber'],
+      ['D-02', 'Door', 'Bedroom 1 Entry', '810mm', '2050mm', 'Timber'],
+      ['W-01', 'Window', 'Living Room · East', '1500mm', '1200mm', 'Aluminium'],
+      ['W-02', 'Window', 'Bedroom 1 · South', '1100mm', '1200mm', 'Aluminium'],
+    ];
+    this.SOIL = [
+      ['Test Point', 'Depth (m)', 'Bearing Capacity', 'Soil Type'],
+      ['TP-01', 1.5, '150 kN/m²', 'Clayey Sand'],
+      ['TP-02', 1.8, '180 kN/m²', 'Sandy Loam'],
+      ['TP-03', 1.6, '165 kN/m²', 'Clayey Sand'],
+    ];
+    this.CLIMATE = [
+      ['Metric', 'Value'],
+      ['Avg. Temperature', '27°C'], ['Annual Rainfall', '890 mm'],
+      ['Peak Sun Hours', '6.2 h'], ['Prevailing Wind', 'SW · 11 km/h'],
+    ];
+
+    this.downloadCSV = (filename, rows) => {
+      const csv = rows.map((r) => r.map((c) => '"' + String(c).replace(/"/g, '""') + '"').join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    };
+
+    this.exportAreas = () => this.downloadCSV('house-of-sharma-areas.csv', this.AREAS);
+    this.exportDoors = () => this.downloadCSV('house-of-sharma-doors-windows.csv', this.DOORS);
+    this.exportSoil = () => this.downloadCSV('house-of-sharma-soil-analysis.csv', this.SOIL);
+    this.exportAll = () => {
+      const rows = [['AREAS LIST'], ...this.AREAS, [], ['DOOR & WINDOW SCHEDULE'], ...this.DOORS, [], ['SOIL ANALYSIS'], ...this.SOIL, [], ['CLIMATE MAPPING'], ...this.CLIMATE];
+      this.downloadCSV('house-of-sharma-full-data.csv', rows);
+    };
+  }
+
+  renderVals() {
+    const tab = this.state.tab;
+    return {
+      tabAreasActive: tab === 'areas' ? 'active' : '',
+      tabDoorsActive: tab === 'doors' ? 'active' : '',
+      tabSoilActive: tab === 'soil' ? 'active' : '',
+      tabClimateActive: tab === 'climate' ? 'active' : '',
+      setTabAreas: this.setTabAreas, setTabDoors: this.setTabDoors, setTabSoil: this.setTabSoil, setTabClimate: this.setTabClimate,
+      isAreas: tab === 'areas', isDoors: tab === 'doors', isSoil: tab === 'soil', isClimate: tab === 'climate',
+      exportAreas: this.exportAreas, exportDoors: this.exportDoors, exportSoil: this.exportSoil, exportAll: this.exportAll,
+    };
+  }
+}
+</script>
+</body>
+</html>
